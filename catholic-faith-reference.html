@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catholic Faith Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#1a2744;
+  --navy-light:#243560;
+  --navy-dark:#111b33;
+  --gold:#c9a84c;
+  --gold-light:#e0c47a;
+  --gold-dark:#a07830;
+  --cream:#f9f5ee;
+  --cream-dark:#ede7d9;
+  --red:#8b1a1a;
+  --red-light:#b52222;
+  --white:#ffffff;
+  --text-dark:#1a1a2e;
+  --text-mid:#3d3d5c;
+  --text-muted:#666680;
+  --shadow:0 4px 20px rgba(26,39,68,0.12);
+  --shadow-hover:0 8px 32px rgba(26,39,68,0.22);
+  --radius:10px;
+  --radius-lg:16px;
+}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;color:var(--navy)}
+
+/* HEADER */
+#app-header{
+  background:var(--navy);
+  padding:0 2rem;
+  display:flex;align-items:center;gap:1.5rem;
+  box-shadow:0 2px 20px rgba(0,0,0,0.3);
+  position:sticky;top:0;z-index:100;
+  min-height:72px;flex-wrap:wrap;
+}
+.header-brand{display:flex;align-items:center;gap:0.75rem}
+.chi-rho{font-size:2rem;color:var(--gold);line-height:1}
+.header-title{color:var(--white)}
+.header-title h1{font-size:1.4rem;font-weight:700;letter-spacing:0.02em;color:var(--gold-light)}
+.header-title p{font-size:0.75rem;color:rgba(255,255,255,0.6);letter-spacing:0.08em;text-transform:uppercase;font-weight:300}
+.header-cross{color:var(--gold);font-size:1.5rem;opacity:0.5;margin-left:auto}
+
+/* NAV */
+#nav{
+  background:var(--navy-dark);
+  display:flex;overflow-x:auto;
+  padding:0 1rem;
+  gap:0.25rem;
+  scrollbar-width:none;
+}
+#nav::-webkit-scrollbar{display:none}
+.nav-btn{
+  background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.85rem 1rem;
+  color:rgba(255,255,255,0.6);
+  font-family:'Lato',sans-serif;font-size:0.82rem;font-weight:400;
+  letter-spacing:0.04em;text-transform:uppercase;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:all 0.2s;
+}
+.nav-btn:hover{color:var(--gold-light)}
+.nav-btn.active{color:var(--gold);border-bottom-color:var(--gold);font-weight:700}
+.nav-icon{font-size:1rem}
+
+/* MAIN */
+main{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+
+/* TABS */
+.tab-content{display:none;animation:fadeIn 0.3s ease}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION HEADER */
+.section-header{margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid var(--gold);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.section-header h2{font-size:2rem;color:var(--navy)}
+.section-header p{color:var(--text-muted);font-size:0.9rem;font-style:italic;margin-top:0.25rem}
+
+/* CONTROLS */
+.controls{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+.search-input{
+  flex:1;min-width:200px;
+  padding:0.6rem 1rem;
+  border:1.5px solid var(--cream-dark);
+  border-radius:var(--radius);
+  font-family:'Lato',sans-serif;font-size:0.9rem;
+  background:var(--white);color:var(--text-dark);
+  transition:border-color 0.2s;
+}
+.search-input:focus{outline:none;border-color:var(--gold)}
+.filter-select{
+  padding:0.6rem 1rem;
+  border:1.5px solid var(--cream-dark);
+  border-radius:var(--radius);
+  font-family:'Lato',sans-serif;font-size:0.85rem;
+  background:var(--white);color:var(--text-dark);cursor:pointer;
+  transition:border-color 0.2s;
+}
+.filter-select:focus{outline:none;border-color:var(--gold)}
+.filter-btn{
+  padding:0.55rem 1rem;
+  border:1.5px solid var(--cream-dark);
+  border-radius:var(--radius);
+  font-family:'Lato',sans-serif;font-size:0.82rem;
+  background:var(--white);color:var(--text-mid);cursor:pointer;
+  transition:all 0.2s;
+}
+.filter-btn:hover,.filter-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.cards-list{display:flex;flex-direction:column;gap:1rem}
+
+/* CARD */
+.card{
+  background:var(--white);
+  border-radius:var(--radius-lg);
+  padding:1.25rem 1.5rem;
+  box-shadow:var(--shadow);
+  border-left:4px solid var(--gold);
+  transition:box-shadow 0.2s,transform 0.2s;
+  cursor:pointer;
+}
+.card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.card.expandable .card-body{display:none}
+.card.expandable.open .card-body{display:block}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.card-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--navy)}
+.card-subtitle{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem}
+.card-body{margin-top:0.75rem;font-size:0.9rem;line-height:1.7;color:var(--text-mid)}
+.card-meta{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem}
+.badge{
+  padding:0.2rem 0.6rem;border-radius:20px;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.05em;text-transform:uppercase;
+}
+.badge-gold{background:#fef3d0;color:#7a5a00}
+.badge-red{background:#fde8e8;color:#7a1010}
+.badge-green{background:#e8f5e8;color:#1a6020}
+.badge-blue{background:#e8eef8;color:#1a3070}
+.badge-purple{background:#f0eaf8;color:#4a1a7a}
+.badge-white{background:#f0f0f0;color:#404040}
+.badge-navy{background:#e0e4ef;color:#1a2744}
+.expand-icon{font-size:1.2rem;color:var(--gold);flex-shrink:0;transition:transform 0.2s;font-style:normal}
+.card.open .expand-icon{transform:rotate(180deg)}
+
+/* LITURGICAL COLORS */
+.color-dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
+.color-white{background:#f0f0f0;border:1px solid #ccc}
+.color-gold{background:#c9a84c}
+.color-red{background:#b52222}
+.color-green{background:#2a7a2a}
+.color-purple{background:#6a2a8a}
+.color-rose{background:#e8608a}
+.color-black{background:#222}
+
+/* UPCOMING HIGHLIGHT */
+.upcoming-card{border-left-color:var(--red)!important;background:#fff9f9}
+.upcoming-badge{background:#fde8e8;color:#8b1a1a;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.72rem;font-weight:700}
+
+/* POPES */
+.pope-card{border-left-color:var(--navy)}
+.pope-modern{border-left-color:var(--gold)}
+.pope-number{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;min-width:2.5rem}
+.pope-info{flex:1}
+.pope-dates{font-size:0.8rem;color:var(--text-muted)}
+.pope-header{display:flex;align-items:flex-start;gap:1rem}
+
+/* PRAYER */
+.prayer-section{margin-bottom:2rem}
+.prayer-section h3{font-size:1.3rem;color:var(--navy);border-bottom:1px solid var(--cream-dark);padding-bottom:0.5rem;margin-bottom:1rem}
+.prayer-example{
+  background:var(--cream);border-left:3px solid var(--gold);
+  padding:0.75rem 1rem;margin-top:0.75rem;border-radius:0 var(--radius) var(--radius) 0;
+  font-style:italic;font-size:0.88rem;color:var(--text-mid);line-height:1.7;
+}
+.mystery-list{margin-top:0.5rem;padding-left:1.5rem}
+.mystery-list li{margin-bottom:0.3rem;font-size:0.88rem;color:var(--text-mid)}
+
+/* RELIC CLASSES */
+.relic-first{border-left-color:var(--red)}
+.relic-second{border-left-color:var(--gold)}
+.relic-third{border-left-color:var(--navy)}
+
+/* BACK TO TOP */
+#back-to-top{
+  position:fixed;bottom:2rem;right:2rem;
+  background:var(--navy);color:var(--gold);
+  border:2px solid var(--gold);border-radius:50%;
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+  z-index:500;
+}
+#back-to-top.visible{opacity:1;pointer-events:all}
+
+/* RESULT COUNT */
+.result-count{font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:3rem;color:var(--text-muted);font-style:italic}
+
+/* SOLEMNITY BANNER */
+.season-banner{
+  background:var(--navy);color:var(--cream);
+  border-radius:var(--radius-lg);padding:1rem 1.5rem;
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;
+  flex-wrap:wrap;
+}
+.season-banner h3{color:var(--gold-light);font-size:1.1rem}
+.season-banner p{font-size:0.85rem;opacity:0.8;margin-top:0.2rem}
+
+/* INFO BOX */
+.info-box{
+  background:var(--navy);color:var(--cream);
+  border-radius:var(--radius-lg);padding:1.5rem;
+  margin-bottom:2rem;
+}
+.info-box h3{color:var(--gold-light);margin-bottom:0.75rem}
+.info-box p{font-size:0.9rem;line-height:1.7;opacity:0.85}
+.info-box .class-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
+.class-item{background:rgba(255,255,255,0.08);border-radius:var(--radius);padding:1rem;border-top:3px solid var(--gold)}
+.class-item h4{color:var(--gold-light);font-family:'Playfair Display',serif;margin-bottom:0.5rem}
+.class-item p{font-size:0.82rem;opacity:0.8;line-height:1.6}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  #app-header{padding:0.75rem 1rem}
+  main{padding:1.25rem 1rem}
+  .section-header h2{font-size:1.5rem}
+  .cards-grid{grid-template-columns:1fr}
+  .nav-btn{padding:0.7rem 0.75rem;font-size:0.75rem}
+}
+
+/* DIVIDER */
+.gold-divider{height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:2rem 0;border:none}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.data-table th{background:var(--navy);color:var(--gold-light);padding:0.7rem 1rem;text-align:left;font-family:'Playfair Display',serif;font-weight:600}
+.data-table td{padding:0.7rem 1rem;border-bottom:1px solid var(--cream-dark);vertical-align:top}
+.data-table tr:hover td{background:var(--cream)}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<header id="app-header">
+  <div class="header-brand">
+    <span class="chi-rho">☧</span>
+    <div class="header-title">
+      <h1>Catholic Faith Reference</h1>
+      <p>A comprehensive guide to the Roman Catholic faith</p>
+    </div>
+  </div>
+  <span class="header-cross">✝</span>
+</header>
+
+<nav id="nav">
+  <button class="nav-btn active" onclick="showTab('liturgical')" data-tab="liturgical">
+    <span class="nav-icon">📅</span> Liturgical Calendar
+  </button>
+  <button class="nav-btn" onclick="showTab('saints')" data-tab="saints">
+    <span class="nav-icon">✨</span> Saints
+  </button>
+  <button class="nav-btn" onclick="showTab('popes')" data-tab="popes">
+    <span class="nav-icon">⛪</span> Popes
+  </button>
+  <button class="nav-btn" onclick="showTab('miracles')" data-tab="miracles">
+    <span class="nav-icon">🕊</span> Miracles & Apparitions
+  </button>
+  <button class="nav-btn" onclick="showTab('prayer')" data-tab="prayer">
+    <span class="nav-icon">🙏</span> Types of Prayer
+  </button>
+  <button class="nav-btn" onclick="showTab('relics')" data-tab="relics">
+    <span class="nav-icon">⚱</span> Relics
+  </button>
+</nav>
+
+<main>
+
+<!-- ===== TAB 1: LITURGICAL CALENDAR ===== -->
+<div id="tab-liturgical" class="tab-content active">
+  <div class="section-header">
+    <div>
+      <h2>Liturgical Calendar 2025</h2>
+      <p>Feasts, Solemnities, Memorials & Seasons of the Roman Catholic Church</p>
+    </div>
+  </div>
+  <div id="season-banner-container"></div>
+  <div class="controls">
+    <select class="filter-select" id="lit-month-filter" onchange="filterLiturgical()">
+      <option value="">All Months</option>
+      <option value="1">January</option><option value="2">February</option>
+      <option value="3">March</option><option value="4">April</option>
+      <option value="5">May</option><option value="6">June</option>
+      <option value="7">July</option><option value="8">August</option>
+      <option value="9">September</option><option value="10">October</option>
+      <option value="11">November</option><option value="12">December</option>
+    </select>
+    <select class="filter-select" id="lit-type-filter" onchange="filterLiturgical()">
+      <option value="">All Types</option>
+      <option value="Solemnity">Solemnities</option>
+      <option value="Feast">Feasts</option>
+      <option value="Memorial">Memorials</option>
+      <option value="Optional Memorial">Optional Memorials</option>
+      <option value="Season">Seasons</option>
+    </select>
+    <label style="font-size:0.85rem;color:var(--text-muted);display:flex;align-items:center;gap:0.4rem">
+      <input type="checkbox" id="upcoming-only" onchange="filterLiturgical()"> Upcoming 30 days only
+    </label>
+  </div>
+  <div class="result-count" id="lit-count"></div>
+  <div class="cards-list" id="liturgical-list"></div>
+</div>
+
+<!-- ===== TAB 2: SAINTS ===== -->
+<div id="tab-saints" class="tab-content">
+  <div class="section-header">
+    <div>
+      <h2>The Saints</h2>
+      <p>Holy men and women who have been canonized by the Church</p>
+    </div>
+  </div>
+  <div class="controls">
+    <input type="text" class="search-input" id="saint-search" placeholder="Search saints by name, patronage..." oninput="filterSaints()">
+    <select class="filter-select" id="saint-month-filter" onchange="filterSaints()">
+      <option value="">All Feast Day Months</option>
+      <option value="1">January</option><option value="2">February</option>
+      <option value="3">March</option><option value="4">April</option>
+      <option value="5">May</option><option value="6">June</option>
+      <option value="7">July</option><option value="8">August</option>
+      <option value="9">September</option><option value="10">October</option>
+      <option value="11">November</option><option value="12">December</option>
+    </select>
+  </div>
+  <div class="result-count" id="saint-count"></div>
+  <div class="cards-grid" id="saints-list"></div>
+</div>
+
+<!-- ===== TAB 3: POPES ===== -->
+<div id="tab-popes" class="tab-content">
+  <div class="section-header">
+    <div>
+      <h2>The Popes</h2>
+      <p>Successors of Saint Peter, Bishops of Rome, Vicars of Christ</p>
+    </div>
+  </div>
+  <div class="controls">
+    <input type="text" class="search-input" id="pope-search" placeholder="Search popes by name, nationality..." oninput="filterPopes()">
+    <select class="filter-select" id="pope-era-filter" onchange="filterPopes()">
+      <option value="">All Eras</option>
+      <option value="early">Early Church (1–500)</option>
+      <option value="medieval">Medieval (500–1400)</option>
+      <option value="renaissance">Renaissance–Baroque (1400–1800)</option>
+      <option value="modern">Modern (1800–present)</option>
+    </select>
+  </div>
+  <div class="result-count" id="pope-count"></div>
+  <div class="cards-list" id="popes-list"></div>
+</div>
+
+<!-- ===== TAB 4: MIRACLES ===== -->
+<div id="tab-miracles" class="tab-content">
+  <div class="section-header">
+    <div>
+      <h2>Miracles &amp; Apparitions</h2>
+      <p>Approved supernatural events in the history of the Church</p>
+    </div>
+  </div>
+  <div class="controls">
+    <div id="miracle-filters" style="display:flex;gap:0.5rem;flex-wrap:wrap">
+      <button class="filter-btn active" onclick="filterMiracles(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterMiracles(this,'Eucharistic Miracle')">Eucharistic</button>
+      <button class="filter-btn" onclick="filterMiracles(this,'Apparition')">Apparitions</button>
+      <button class="filter-btn" onclick="filterMiracles(this,'Healing')">Healings</button>
+      <button class="filter-btn" onclick="filterMiracles(this,'Sign')">Signs</button>
+      <button class="filter-btn" onclick="filterMiracles(this,'Other')">Other</button>
+    </div>
+  </div>
+  <div class="cards-grid" id="miracles-list"></div>
+</div>
+
+<!-- ===== TAB 5: PRAYER ===== -->
+<div id="tab-prayer" class="tab-content">
+  <div class="section-header">
+    <div>
+      <h2>Types of Prayer</h2>
+      <p>Forms and methods of Catholic prayer and contemplation</p>
+    </div>
+  </div>
+  <div id="prayer-content"></div>
+</div>
+
+<!-- ===== TAB 6: RELICS ===== -->
+<div id="tab-relics" class="tab-content">
+  <div class="section-header">
+    <div>
+      <h2>Sacred Relics</h2>
+      <p>The venerable remains and objects associated with the saints and Christ</p>
+    </div>
+  </div>
+  <div class="info-box" id="relic-info-box">
+    <h3>The Three Classes of Relics</h3>
+    <div class="class-grid">
+      <div class="class-item" style="border-top-color:#b52222">
+        <h4>First Class</h4>
+        <p>The physical remains of a saint: bones, hair, flesh, or ashes. Also includes instruments of Christ's Passion (the True Cross, the Holy Nails). These are the most venerated class of relics.</p>
+      </div>
+      <div class="class-item">
+        <h4>Second Class</h4>
+        <p>Items owned or used by a saint during their lifetime, such as clothing, tools, books, or rosaries. These carry the sanctifying influence of the saint's contact.</p>
+      </div>
+      <div class="class-item" style="border-top-color:#1a2744">
+        <h4>Third Class</h4>
+        <p>Objects touched to a first- or second-class relic. These are the most common type of relic distributed to the faithful and are used for personal devotion.</p>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+      <button class="filter-btn active" onclick="filterRelics(this,'all')">All Classes</button>
+      <button class="filter-btn" onclick="filterRelics(this,'First Class')">First Class</button>
+      <button class="filter-btn" onclick="filterRelics(this,'Second Class')">Second Class</button>
+      <button class="filter-btn" onclick="filterRelics(this,'Third Class')">Third Class</button>
+    </div>
+  </div>
+  <div class="cards-grid" id="relics-list"></div>
+</div>
+
+</main>
+
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+
+const TODAY = new Date(2025,0,1); // Use Jan 1 2025 as reference; script will use real Date()
+const REAL_TODAY = new Date();
+
+// ---- LITURGICAL CALENDAR DATA ----
+const liturgicalData = [
+  // SEASONS
+  {date:"2025-12-01",month:12,name:"First Sunday of Advent",rank:"Season",color:"purple",desc:"The liturgical year begins. Advent is a season of joyful anticipation and preparation for both the Nativity of the Lord and His Second Coming. The violet/purple vestments signal penitence and longing.",upcoming:false},
+  {date:"2025-03-05",month:3,name:"Ash Wednesday",rank:"Season",color:"purple",desc:"The beginning of Lent — a 40-day season of fasting, prayer, and almsgiving. Ashes are distributed on the forehead in the shape of a cross, recalling mortality and the call to repentance.",upcoming:false},
+  {date:"2025-04-13",month:4,name:"Palm Sunday",rank:"Season",color:"red",desc:"The beginning of Holy Week, commemorating the triumphal entry of Jesus into Jerusalem. Palms are blessed and distributed; the Passion narrative is proclaimed at Mass.",upcoming:false},
+  {date:"2025-04-17",month:4,name:"Holy Thursday (Mass of the Lord's Supper)",rank:"Season",color:"white",desc:"The evening Mass commemorates the institution of the Eucharist and the priesthood at the Last Supper, and Jesus's washing of the disciples' feet. The altar is stripped after Mass.",upcoming:false},
+  {date:"2025-04-18",month:4,name:"Good Friday",rank:"Season",color:"red",desc:"The solemn commemoration of the Passion and Death of the Lord. The only day in the year when Mass is not celebrated; the Liturgy of the Lord's Passion includes veneration of the Cross.",upcoming:false},
+  {date:"2025-04-19",month:4,name:"Holy Saturday / Easter Vigil",rank:"Season",color:"white",desc:"The great Vigil begins after nightfall. The Church lights the Easter fire, proclaims the Exsultet, celebrates the Liturgy of the Word, baptizes new members, and celebrates the first Eucharist of Easter.",upcoming:false},
+  {date:"2025-04-20",month:4,name:"Easter Sunday",rank:"Solemnity",color:"white",desc:"The Solemnity of the Resurrection of the Lord. The pinnacle of the entire liturgical year. 'He is not here; He has risen.' The Easter Season lasts 50 days, ending at Pentecost.",upcoming:false},
+  {date:"2025-05-29",month:5,name:"Ascension of the Lord",rank:"Solemnity",color:"white",desc:"Forty days after Easter, Christ ascends in glory to the Father's right hand. In many dioceses this is celebrated on the following Sunday. 'This Jesus, who has been taken up from you into heaven, will return in the same way.' (Acts 1:11)",upcoming:false},
+  {date:"2025-06-08",month:6,name:"Pentecost Sunday",rank:"Solemnity",color:"red",desc:"Fifty days after Easter, the Holy Spirit descends on the Apostles and the Blessed Virgin Mary gathered in the Upper Room. Considered the 'birthday of the Church.' Red vestments recall the tongues of fire.",upcoming:false},
+  {date:"2025-06-15",month:6,name:"Most Holy Trinity",rank:"Solemnity",color:"white",desc:"The Sunday after Pentecost celebrates the central mystery of the Christian faith: one God in three Persons — Father, Son, and Holy Spirit. 'Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit.' (Mt 28:19)",upcoming:false},
+  {date:"2025-06-19",month:6,name:"Corpus Christi (Body and Blood of Christ)",rank:"Solemnity",color:"white",desc:"Celebrates the Real Presence of Jesus Christ in the Eucharist. Instituted by Pope Urban IV in 1264, largely through the efforts of St. Thomas Aquinas. Eucharistic processions are a hallmark of this feast.",upcoming:false},
+  // JANUARY
+  {date:"2025-01-01",month:1,name:"Solemnity of Mary, Mother of God",rank:"Solemnity",color:"white",desc:"The oldest Marian feast in the Roman calendar. On January 1, the Church venerates Mary as Theotokos — God-bearer — the title solemnly defined at the Council of Ephesus in 431. This day is also the World Day of Peace.",upcoming:false},
+  {date:"2025-01-06",month:1,name:"Epiphany of the Lord",rank:"Solemnity",color:"white",desc:"Celebrates the manifestation of Christ to the Gentiles, represented by the Magi's visit. In the East, the primary epiphany celebration; in the West, it concludes the Christmas season. 'We observed his star at its rising and have come to pay him homage.' (Mt 2:2)",upcoming:false},
+  {date:"2025-01-12",month:1,name:"Baptism of the Lord",rank:"Feast",color:"white",desc:"Commemorates the baptism of Jesus by John the Baptist in the Jordan River, at which the Holy Spirit descended as a dove and the Father's voice declared 'This is my beloved Son.' This feast closes the Christmas season.",upcoming:false},
+  {date:"2025-01-17",month:1,name:"St. Anthony of Egypt",rank:"Optional Memorial",color:"white",desc:"Abbot and Father of Christian Monasticism (251–356). He withdrew into the Egyptian desert and his example attracted thousands of followers, giving birth to organized monasticism. His Life was written by St. Athanasius.",upcoming:false},
+  {date:"2025-01-20",month:1,name:"St. Sebastian",rank:"Optional Memorial",color:"red",desc:"Roman soldier and martyr of the early Church (d. 288). Secretly a Christian, he encouraged imprisoned Christians. Ordered executed by arrows, he survived and was beaten to death. Patron of athletes and soldiers.",upcoming:false},
+  {date:"2025-01-21",month:1,name:"St. Agnes",rank:"Memorial",color:"red",desc:"Virgin and martyr of Rome (d. ~304). At age 12 or 13 she refused marriage and was martyred for her faith and consecrated virginity. She is one of the most celebrated martyrs of the early Church.",upcoming:false},
+  {date:"2025-01-24",month:1,name:"St. Francis de Sales",rank:"Memorial",color:"white",desc:"Bishop of Geneva and Doctor of the Church (1567–1622). His gentle, humanistic approach to spirituality, expressed in Introduction to the Devout Life and Treatise on the Love of God, transformed Catholic devotional life.",upcoming:false},
+  {date:"2025-01-25",month:1,name:"Conversion of St. Paul",rank:"Feast",color:"white",desc:"Commemorates the Damascus Road experience of Saul of Tarsus, the great persecutor who became the greatest missionary. 'Suddenly a light from heaven flashed around him.' (Acts 9:3) Patron of missionaries and evangelists.",upcoming:false},
+  {date:"2025-01-28",month:1,name:"St. Thomas Aquinas",rank:"Memorial",color:"white",desc:"Priest and Doctor of the Church (1225–1274). The 'Angelic Doctor,' whose Summa Theologica synthesized faith and reason in an unparalleled manner. Patron of Catholic schools and universities.",upcoming:false},
+  // FEBRUARY
+  {date:"2025-02-02",month:2,name:"Presentation of the Lord",rank:"Feast",color:"white",desc:"Forty days after Christmas, Mary and Joseph present the infant Jesus in the Temple. Simeon's Nunc Dimittis — 'Lord, now you let your servant go in peace' — is among the most beloved canticles. Also called Candlemas.",upcoming:false},
+  {date:"2025-02-03",month:2,name:"St. Blaise",rank:"Optional Memorial",color:"red",desc:"Bishop and martyr (d. ~316). Patron of throat ailments; the Blessing of Throats on this day is a beloved tradition in which two candles are crossed over the throat while a prayer for healing is said.",upcoming:false},
+  {date:"2025-02-05",month:2,name:"St. Agatha",rank:"Memorial",color:"red",desc:"Virgin and martyr of Sicily (d. ~251). She resisted the advances of a Roman prefect and suffered terrible tortures. Patron of women with breast cancer and nurses. Her name appears in the Roman Canon.",upcoming:false},
+  {date:"2025-02-11",month:2,name:"Our Lady of Lourdes",rank:"Optional Memorial",color:"white",desc:"Marks the first apparition of the Blessed Virgin Mary to Bernadette Soubirous on February 11, 1858. This feast is also the World Day of the Sick. Lourdes has since become one of the most visited Marian shrines.",upcoming:false},
+  {date:"2025-02-14",month:2,name:"Sts. Cyril and Methodius",rank:"Memorial",color:"white",desc:"The 'Apostles to the Slavs' (9th century) evangelized Moravia and created the Glagolitic alphabet to translate the Scriptures into Slavonic. Co-patrons of Europe along with St. Benedict.",upcoming:false},
+  {date:"2025-02-22",month:2,name:"Chair of St. Peter",rank:"Feast",color:"white",desc:"Celebrates the authority entrusted to St. Peter as head of the Church and his successors. 'You are Peter, and upon this rock I will build my Church.' (Mt 16:18). The ancient cathedra (bishop's chair) in St. Peter's Basilica is venerated.",upcoming:false},
+  // MARCH
+  {date:"2025-03-07",month:3,name:"Sts. Perpetua and Felicity",rank:"Memorial",color:"red",desc:"Martyrs of Carthage (d. 203). Their Passion is one of the earliest and most vivid accounts of Christian martyrdom. Perpetua was a young noblewoman; Felicity, her pregnant enslaved companion. Both died in the amphitheater.",upcoming:false},
+  {date:"2025-03-17",month:3,name:"St. Patrick",rank:"Optional Memorial",color:"white",desc:"Bishop and Patron of Ireland (387–461). Carried off to Ireland as a slave at 16, he escaped, became a bishop, returned to Ireland as a missionary, and converted the nation. His Breastplate prayer remains beloved.",upcoming:false},
+  {date:"2025-03-19",month:3,name:"St. Joseph, Spouse of the Virgin Mary",rank:"Solemnity",color:"white",desc:"Solemnity of the foster father of Jesus and spouse of Mary. Patron of the Universal Church, workers, fathers, and a happy death. Pope Francis added the words 'and of Saint Joseph' to the Eucharistic Prayers in 2013.",upcoming:false},
+  {date:"2025-03-25",month:3,name:"Annunciation of the Lord",rank:"Solemnity",color:"white",desc:"The angel Gabriel announces to Mary that she will conceive the Son of God. Her fiat — 'Be it done to me according to your word' (Lk 1:38) — is the hinge of salvation history. Nine months before Christmas.",upcoming:false},
+  // APRIL
+  {date:"2025-04-23",month:4,name:"St. George",rank:"Optional Memorial",color:"red",desc:"Martyr (d. ~303). One of the most venerated saints in both East and West. Patron of England, Portugal, Georgia, and soldiers. While the historical details of his life are sparse, his courage is legendary.",upcoming:false},
+  {date:"2025-04-25",month:4,name:"St. Mark the Evangelist",rank:"Feast",color:"red",desc:"Author of the second Gospel, companion of St. Paul and St. Peter. His Gospel is the earliest and most vivid account of Jesus's ministry. Patron of Venice, whose basilica houses his relics.",upcoming:false},
+  // MAY
+  {date:"2025-05-01",month:5,name:"St. Joseph the Worker",rank:"Optional Memorial",color:"white",desc:"Instituted by Pope Pius XII in 1955 to coincide with International Workers' Day. Honors St. Joseph as a model of dignity in manual labor and the sanctification of work.",upcoming:false},
+  {date:"2025-05-03",month:5,name:"Sts. Philip and James",rank:"Feast",color:"red",desc:"Two of the twelve Apostles. Philip was from Bethsaida and asked Jesus 'Show us the Father.' James the Less was the first Bishop of Jerusalem and author of the Letter of James.",upcoming:false},
+  {date:"2025-05-13",month:5,name:"Our Lady of Fatima",rank:"Optional Memorial",color:"white",desc:"Commemorates the apparitions of the Blessed Virgin Mary to three shepherd children at Fatima, Portugal, beginning May 13, 1917. She called for prayer, penance, and the consecration of Russia.",upcoming:false},
+  {date:"2025-05-31",month:5,name:"Visitation of the Blessed Virgin Mary",rank:"Feast",color:"white",desc:"Mary's visit to her cousin Elizabeth after the Annunciation. 'When Elizabeth heard Mary's greeting, the infant leaped in her womb.' (Lk 1:41) Elizabeth's exclamation gave us the Hail Mary's second line.",upcoming:false},
+  // JUNE
+  {date:"2025-06-13",month:6,name:"St. Anthony of Padua",rank:"Memorial",color:"white",desc:"Franciscan friar and Doctor of the Church (1195–1231). The most popular of the Franciscan saints, known for his powerful preaching and miraculous gifts. Patron of lost things and the poor.",upcoming:false},
+  {date:"2025-06-24",month:6,name:"Birth of St. John the Baptist",rank:"Solemnity",color:"white",desc:"One of only three birthdays celebrated in the liturgical year (along with Our Lord and Our Lady). The Precursor of Christ was filled with the Holy Spirit from his mother's womb.",upcoming:false},
+  {date:"2025-06-27",month:6,name:"St. Cyril of Alexandria",rank:"Optional Memorial",color:"white",desc:"Bishop and Doctor (376–444). Championed the title Theotokos for Mary against Nestorius at the Council of Ephesus (431). His defense of the hypostatic union shaped Christology for all time.",upcoming:false},
+  {date:"2025-06-28",month:6,name:"St. Irenaeus",rank:"Memorial",color:"red",desc:"Bishop of Lyon and martyr (130–202). One of the earliest systematic theologians, his Against Heresies refuted Gnosticism. He articulated the 'recapitulation' theory of salvation and emphasized apostolic tradition.",upcoming:false},
+  {date:"2025-06-29",month:6,name:"Sts. Peter and Paul",rank:"Solemnity",color:"red",desc:"Solemnity of the two great pillars of the Church. Peter, the Rock upon whom the Church was built; Paul, the Apostle to the Gentiles. Both were martyred in Rome under Nero around 67 AD.",upcoming:false},
+  // JULY
+  {date:"2025-07-03",month:7,name:"St. Thomas the Apostle",rank:"Feast",color:"red",desc:"The 'doubting' Apostle whose confession 'My Lord and my God!' upon seeing the Risen Christ is one of the highest declarations of faith in the Gospels. Tradition holds he evangelized India.",upcoming:false},
+  {date:"2025-07-22",month:7,name:"St. Mary Magdalene",rank:"Feast",color:"white",desc:"Disciple of Jesus, first witness to the Resurrection. Pope Francis elevated her memorial to a Feast in 2016. Called 'Apostle to the Apostles' by St. Thomas Aquinas. Patron of penitents.",upcoming:false},
+  {date:"2025-07-25",month:7,name:"St. James the Apostle",rank:"Feast",color:"red",desc:"Son of Zebedee, brother of John, and the first apostle to be martyred (d. 44 AD). Patron of Spain; the Cathedral of Santiago de Compostela is built over his reputed tomb.",upcoming:false},
+  {date:"2025-07-26",month:7,name:"Sts. Joachim and Anne",rank:"Memorial",color:"white",desc:"The parents of the Blessed Virgin Mary and grandparents of Jesus. Their names appear in Tradition though not in Scripture. Patrons of grandparents and those who care for the elderly.",upcoming:false},
+  // AUGUST
+  {date:"2025-08-06",month:8,name:"Transfiguration of the Lord",rank:"Feast",color:"white",desc:"Jesus is transfigured before Peter, James, and John on Mount Tabor, revealing his divine glory. Moses and Elijah appear with him. 'This is my beloved Son, with whom I am well pleased; listen to him.' (Mt 17:5)",upcoming:false},
+  {date:"2025-08-10",month:8,name:"St. Lawrence",rank:"Feast",color:"red",desc:"Deacon and martyr of Rome (d. 258). Treasured of the Church. When commanded to surrender the Church's riches, he presented the poor to the prefect. Roasted on a gridiron, he reportedly said 'Turn me over; I'm done on this side.'",upcoming:false},
+  {date:"2025-08-15",month:8,name:"Assumption of the Blessed Virgin Mary",rank:"Solemnity",color:"white",desc:"Dogma defined by Pope Pius XII in 1950: at the end of her earthly life, Mary was assumed body and soul into heavenly glory. A Holy Day of Obligation. One of the oldest Marian feasts in the Church.",upcoming:false},
+  {date:"2025-08-22",month:8,name:"Queenship of the Blessed Virgin Mary",rank:"Memorial",color:"white",desc:"Instituted by Pope Pius XII in 1954, one week after the Assumption. Celebrates Mary's exalted role as Queen of heaven and earth, crowned by her Son. 'A great sign appeared in the sky, a woman clothed with the sun.' (Rev 12:1)",upcoming:false},
+  {date:"2025-08-28",month:8,name:"St. Augustine of Hippo",rank:"Memorial",color:"white",desc:"Bishop and Doctor of the Church (354–430). One of the most influential theologians in Church history. His Confessions is among the greatest spiritual autobiographies ever written. 'Our heart is restless until it reposes in Thee.'",upcoming:false},
+  {date:"2025-08-29",month:8,name:"Passion of St. John the Baptist",rank:"Memorial",color:"red",desc:"Commemorates the beheading of John the Baptist ordered by Herod Antipas at the request of Salome. 'He must increase; I must decrease.' (Jn 3:30) The last and greatest of the prophets.",upcoming:false},
+  // SEPTEMBER
+  {date:"2025-09-08",month:9,name:"Nativity of the Blessed Virgin Mary",rank:"Feast",color:"white",desc:"The birth of Mary, nine months after the Immaculate Conception (Dec. 8). 'The birth of Mary, the Virgin Mother of God, heralded joy to the whole world, for from her arose the Sun of Justice, Christ our God.' (Collect)",upcoming:false},
+  {date:"2025-09-14",month:9,name:"Exaltation of the Holy Cross",rank:"Feast",color:"red",desc:"Commemorates the discovery of the True Cross by St. Helena and its solemn elevation by Emperor Heraclius in 629 after its recovery from the Persians. 'We adore your Cross, O Lord, and we praise and glorify your holy Resurrection.'",upcoming:false},
+  {date:"2025-09-29",month:9,name:"Sts. Michael, Gabriel, and Raphael (Michaelmas)",rank:"Feast",color:"white",desc:"Feast of the three archangels named in Scripture. Michael, champion against evil; Gabriel, messenger of the Incarnation; Raphael, healer and guide of Tobias. Patron archangels of the Church.",upcoming:false},
+  {date:"2025-09-30",month:9,name:"St. Jerome",rank:"Memorial",color:"white",desc:"Priest and Doctor (342–420). His Latin Vulgate translation of the Bible became the standard text of the Western Church for over a millennium. His vast scholarship and sharp tongue made him both revered and feared.",upcoming:false},
+  // OCTOBER
+  {date:"2025-10-01",month:10,name:"St. Thérèse of the Child Jesus",rank:"Memorial",color:"white",desc:"Carmelite nun and Doctor of the Church (1873–1897). Her 'Little Way' of spiritual childhood — doing small things with great love — became one of the most influential spiritualities of the modern era.",upcoming:false},
+  {date:"2025-10-02",month:10,name:"Guardian Angels",rank:"Memorial",color:"white",desc:"Celebrates the angelic beings assigned by God to guide and protect each human soul. 'See that you do not despise one of these little ones, for I say to you that their angels in heaven always look upon the face of my heavenly Father.' (Mt 18:10)",upcoming:false},
+  {date:"2025-10-04",month:10,name:"St. Francis of Assisi",rank:"Memorial",color:"white",desc:"Founder of the Franciscan Order (1181–1226). The beloved 'Poverello' who embraced radical poverty, composed the Canticle of the Sun, and received the stigmata. Patron of animals, ecology, and Italy.",upcoming:false},
+  {date:"2025-10-07",month:10,name:"Our Lady of the Rosary",rank:"Memorial",color:"white",desc:"Established by Pope Pius V to commemorate the Christian naval victory at Lepanto (1571), attributed to Our Lady's intercession through the Rosary. Now a universal celebration of Marian prayer.",upcoming:false},
+  {date:"2025-10-18",month:10,name:"St. Luke the Evangelist",rank:"Feast",color:"red",desc:"Author of the third Gospel and the Acts of the Apostles. A physician and companion of St. Paul. His Gospel contains unique material: the Annunciation, the Visitation, the Nativity, and the parables of the Good Samaritan and Prodigal Son.",upcoming:false},
+  {date:"2025-10-28",month:10,name:"Sts. Simon and Jude",rank:"Feast",color:"red",desc:"Two of the Twelve Apostles. Simon called the Zealot; Jude (Thaddeus) author of the Letter of Jude. Patron of desperate causes, St. Jude receives more mail at the National Shrine than any other saint.",upcoming:false},
+  // NOVEMBER
+  {date:"2025-11-01",month:11,name:"All Saints Day",rank:"Solemnity",color:"white",desc:"Holy Day of Obligation. The universal feast of all the blessed in heaven, named and unnamed. 'Blessed are the pure in heart, for they will see God.' (Mt 5:8) The Church celebrates her triumph in her members.",upcoming:false},
+  {date:"2025-11-02",month:11,name:"All Souls Day (Commemoration)",rank:"Season",color:"black",desc:"The Church prays for all the faithful departed. Three Masses may be celebrated by priests. The doctrine of Purgatory and the efficacy of prayer for the dead are affirmed. 'Eternal rest grant unto them, O Lord.'",upcoming:false},
+  {date:"2025-11-09",month:11,name:"Dedication of the Lateran Basilica",rank:"Feast",color:"white",desc:"Celebrates the mother church of all Catholic churches worldwide: the Cathedral of the Bishop of Rome, the Pope. 'The most illustrious basilica of the world.' The Lateran Basilica has stood since Constantine in 324 AD.",upcoming:false},
+  {date:"2025-11-21",month:11,name:"Presentation of Mary",rank:"Memorial",color:"white",desc:"Based on the tradition recorded in the Protoevangelium of James that Mary was presented in the Temple as a young girl and dedicated to God. Celebrated in both East and West since the 6th century.",upcoming:false},
+  {date:"2025-11-22",month:11,name:"St. Cecilia",rank:"Memorial",color:"red",desc:"Virgin and martyr of Rome (d. ~230). Patron of musicians, singers, and church music. She is said to have sung to God in her heart during her wedding. Her death became an enduring emblem of steadfast faith.",upcoming:false},
+  {date:"2025-11-30",month:11,name:"St. Andrew the Apostle",rank:"Feast",color:"red",desc:"The first-called Apostle, brother of Simon Peter. He brought Peter to Jesus. Patron of Scotland, Russia, and Greece. Traditionally crucified on an X-shaped cross, now called the St. Andrew's Cross.",upcoming:false},
+  // DECEMBER
+  {date:"2025-12-03",month:12,name:"St. Francis Xavier",rank:"Memorial",color:"white",desc:"Jesuit missionary (1506–1552). Co-founder of the Society of Jesus with St. Ignatius of Loyola. He baptized thousands in India, Japan, and Southeast Asia. Patron of foreign missions and one of the great missionaries.",upcoming:false},
+  {date:"2025-12-08",month:12,name:"Immaculate Conception",rank:"Solemnity",color:"white",desc:"Holy Day of Obligation. Dogma defined by Pope Pius IX in 1854: from the moment of her conception, by the singular grace of God, Mary was preserved from all stain of original sin. Patronal feast of the United States.",upcoming:false},
+  {date:"2025-12-12",month:12,name:"Our Lady of Guadalupe",rank:"Feast",color:"white",desc:"Celebrates the apparitions of Our Lady to Juan Diego at Tepeyac Hill, Mexico in 1531. The miraculous tilma bearing her image has survived for nearly 500 years. Patron of the Americas and of the unborn.",upcoming:false},
+  {date:"2025-12-13",month:12,name:"St. Lucy",rank:"Memorial",color:"red",desc:"Virgin and martyr of Syracuse (d. 304). Her name means 'light,' and she is invoked for eye ailments. In Scandinavian countries, her feast begins the Christmas season with the 'Lucia' procession of lights.",upcoming:false},
+  {date:"2025-12-25",month:12,name:"Nativity of the Lord (Christmas)",rank:"Solemnity",color:"white",desc:"Holy Day of Obligation. 'The Word became flesh and made his dwelling among us.' (Jn 1:14) Three Masses are proper to this day: Midnight, Dawn, and Day. The joy of the Incarnation pervades the liturgy.",upcoming:false},
+  {date:"2025-12-26",month:12,name:"St. Stephen, First Martyr",rank:"Feast",color:"red",desc:"The first Christian martyr, the first of the deacons ordained by the Apostles. He was stoned to death while Saul (later Paul) held the cloaks of his executioners. 'Lord, do not hold this sin against them.' (Acts 7:60)",upcoming:false},
+  {date:"2025-12-28",month:12,name:"Holy Innocents",rank:"Feast",color:"red",desc:"Commemorates the infants of Bethlehem slaughtered by Herod in his attempt to kill the newborn King. The Church honors them as martyrs who died for Christ unknowingly. Patron feast for children who have died.",upcoming:false},
+  {date:"2025-12-29",month:12,name:"St. Thomas Becket",rank:"Optional Memorial",color:"red",desc:"Archbishop of Canterbury and martyr (1118–1170). Murdered in his cathedral by knights of King Henry II over the rights of the Church. His shrine became one of medieval Europe's greatest pilgrimage destinations.",upcoming:false},
+];
+
+// ---- SAINTS DATA ----
+const saintsData = [
+  {name:"St. Peter (Simon Peter)",feastMonth:6,feastDay:"June 29",patron:"Popes, fishermen, net-makers",canon:"Recognized since the 1st century",bio:"The first pope and chief of the Apostles, Peter was a fisherman from Bethsaida called by Jesus to be the 'rock' (Petros) upon which He would build His Church. Impulsive and passionate, Peter both denied Christ three times and was among the first witnesses to the Resurrection. He preached at Pentecost, converting 3,000 souls. He led the early Jerusalem community and later the Church in Rome. He was crucified upside down under Emperor Nero around 67 AD, having declared himself unworthy to die as his Lord had. His relics lie beneath the high altar of St. Peter's Basilica."},
+  {name:"St. Paul the Apostle",feastMonth:6,feastDay:"June 29",patron:"Missionaries, writers, theologians",canon:"Recognized since the 1st century",bio:"Originally Saul of Tarsus, a zealous Pharisee who persecuted the early Church, Paul was dramatically converted on the road to Damascus when the Risen Christ appeared to him in blinding light. He became the 'Apostle to the Gentiles,' undertaking three great missionary journeys across the Mediterranean world, establishing churches in Asia Minor, Greece, and Rome. His 13 letters (epistles) form the theological backbone of the New Testament. His Letter to the Romans is considered one of the greatest theological documents ever composed. He was beheaded in Rome under Nero around 67 AD and is venerated alongside St. Peter."},
+  {name:"St. John the Apostle",feastMonth:12,feastDay:"December 27",patron:"Theologians, love",canon:"Recognized since the 1st century",bio:"The 'Beloved Disciple,' John was the youngest of the Twelve Apostles and the only one who did not flee at the Crucifixion, standing with Mary at the foot of the Cross. He is the author of the fourth Gospel, three epistles, and the Book of Revelation. Known as the 'theologian of love,' his writings emphasize that 'God is Love' (1 Jn 4:8). He cared for the Blessed Virgin Mary after the Crucifixion per Jesus's command. He was exiled to the island of Patmos and is the only Apostle who died peacefully of old age at Ephesus, rather than by martyrdom."},
+  {name:"St. Mary Magdalene",feastMonth:7,feastDay:"July 22",patron:"Penitents, contemplatives",canon:"Recognized since the 1st century",bio:"Mary Magdalene was a devoted disciple of Jesus, from whom He cast out seven demons. She was present at the Crucifixion, the burial, and was the first witness to the Resurrection — 'Apostle to the Apostles' as St. Thomas Aquinas called her. When she encountered the Risen Christ in the garden and recognized Him by the way He spoke her name, she became the first herald of the Resurrection. In Western tradition she was associated with the unnamed sinful woman of Luke 7; in 1969 the Church clarified these are distinct persons. Pope Francis elevated her memorial to a Feast in 2016, honoring her unique witness."},
+  {name:"St. Francis of Assisi",feastMonth:10,feastDay:"October 4",patron:"Animals, ecology, Italy",canon:"July 16, 1228 by Pope Gregory IX",bio:"Born Giovanni di Pietro di Bernardone in 1181, Francis renounced his wealthy merchant family's inheritance before the bishop of Assisi to pursue radical evangelical poverty. He founded the Friars Minor (Franciscans), the Poor Clares with St. Clare, and the Third Order. His 'Canticle of Brother Sun' is the first great poem in the Italian vernacular. In 1224, on Mount La Verna, he received the stigmata — the wounds of Christ — becoming the first person known to receive them. He died in 1226 singing Psalm 141. His ecological spirituality, seeing God in all creation, was invoked by Pope Francis in his Laudato Si' encyclical."},
+  {name:"St. Clare of Assisi",feastMonth:8,feastDay:"August 11",patron:"Television, eye disease, goldsmiths",canon:"September 26, 1255 by Pope Alexander IV",bio:"Born in Assisi in 1194 to a noble family, Clare heard St. Francis preach and was so moved that she fled her home on Palm Sunday 1212 to follow his way. Francis gave her the habit of poverty at the Portiuncula, founding the Poor Ladies (Poor Clares). She lived at San Damiano for over 40 years, often too ill to attend Mass — on those occasions, she reportedly saw the Mass projected on her cell wall, giving rise to her patronage of television. She was the first woman to write a rule for religious life approved by the Pope. Her intense love of the Eucharist was legendary: when Saracen troops threatened, she brought the Blessed Sacrament to the convent gate and they fled."},
+  {name:"St. Thomas Aquinas",feastMonth:1,feastDay:"January 28",patron:"Catholic schools, philosophers",canon:"July 18, 1323 by Pope John XXII",bio:"Born in 1225 to a noble family at Aquino, Italy, Thomas entered the Dominican Order against his family's violent objections. He studied under St. Albert the Great in Paris and Cologne. His massive Summa Theologica, left incomplete at his death in 1274, represents the pinnacle of medieval scholastic theology, synthesizing Aristotelian philosophy with Christian revelation. He also composed exquisite eucharistic hymns including the Tantum Ergo and Pange Lingua for the feast of Corpus Christi. Called the 'Dumb Ox' by classmates for his quietness, Albert the Great predicted the world would hear his bellowing. His intellectual system, Thomism, remains the backbone of Catholic philosophical theology."},
+  {name:"St. Augustine of Hippo",feastMonth:8,feastDay:"August 28",patron:"Theologians, brewers, printers",canon:"1303 by Pope Boniface VIII",bio:"Born in 354 in Thagaste, North Africa, Augustine lived a dissolute youth despite his devout mother Monica's prayers. After intellectual wandering through Manichaeism and Neoplatonism, he was converted through the preaching of St. Ambrose in Milan and his reading of St. Paul. 'Our heart is restless until it reposes in Thee, O Lord' — the opening of his Confessions captures his lifelong restlessness. As Bishop of Hippo for 34 years, he fought the Donatist and Pelagian heresies and produced an enormous body of writings, including the City of God. He died in 430 as the Vandals besieged Hippo. Perhaps the single most influential theologian in Western Christian history."},
+  {name:"St. Thérèse of Lisieux",feastMonth:10,feastDay:"October 1",patron:"Missions, florists, pilots",canon:"May 17, 1925 by Pope Pius XI",bio:"Marie-Françoise-Thérèse Martin was born in 1873 in Alençon, France and entered the Carmelite convent at Lisieux at age 15 through a special papal dispensation. Her 'Little Way' of spiritual childhood taught that holiness consists not in great deeds but in doing small things with extraordinary love. Her autobiography, Story of a Soul, became one of the most widely read spiritual books of the 20th century. She died of tuberculosis at age 24, saying 'I am not dying; I am entering into life.' She was declared a Doctor of the Church by Pope John Paul II in 1997 — one of only four women ever so honored. Her shower of roses continues to inspire millions."},
+  {name:"St. Dominic",feastMonth:8,feastDay:"August 8",patron:"Astronomers, scientists, Dominican Republic",canon:"July 3, 1234 by Pope Gregory IX",bio:"Domingo Félix de Guzmán was born in 1170 in Caleruega, Castile. While traveling through southern France, he encountered the Albigensian heresy and dedicated his life to combating it through preaching and example rather than force. He founded the Order of Preachers (Dominicans) in 1216, emphasizing intellectual rigor, poverty, and itinerant preaching. He is credited with spreading the Rosary as a devotional weapon against heresy, though modern historians attribute the Rosary's final form to later Dominicans. His spirit of joyful poverty, intellectual integrity, and compassion for sinners characterize the Order he founded. He died in 1221 and was buried at Bologna."},
+  {name:"St. Ignatius of Loyola",feastMonth:7,feastDay:"July 31",patron:"Soldiers, spiritual retreats, Jesuits",canon:"March 12, 1622 by Pope Gregory XV",bio:"Íñigo López de Loyola was born in 1491 in the Basque Country, Spain. A vain courtier and soldier, he was gravely wounded at the Battle of Pamplona in 1521. During his long recovery, reading the lives of the saints sparked his conversion. His Spiritual Exercises, composed during a retreat at Manresa, became one of the most influential works of spiritual direction ever written. He founded the Society of Jesus (Jesuits) in 1540, a highly educated and mobile religious order committed to going wherever the Pope sent them. The Jesuits became the intellectual spearhead of the Counter-Reformation, founding hundreds of schools and universities worldwide. Pope Francis is the first Jesuit pope."},
+  {name:"St. Teresa of Ávila",feastMonth:10,feastDay:"October 15",patron:"Spain, chess players, headache sufferers",canon:"March 12, 1622 by Pope Gregory XV",bio:"Teresa de Cepeda y Ahumada was born in 1515 in Ávila, Spain. After years of mediocre religious observance in the Carmelite convent, she underwent a deep conversion at age 39 upon seeing an image of the wounded Christ. She reformed the Carmelites with St. John of the Cross, founding the Discalced Carmelites. Her mystical treatises, including The Way of Perfection, The Interior Castle, and her Autobiography, are classics of Christian mysticism. The Interior Castle describes the soul's journey toward God through seven dwelling places. She was the first woman declared a Doctor of the Church by Pope Paul VI in 1970. Her celebrated wit: 'Lord, if this is how you treat your friends, no wonder you have so few of them.'"},
+  {name:"St. John of the Cross",feastMonth:12,feastDay:"December 14",patron:"Mystics, contemplatives, poets",canon:"December 26, 1726 by Pope Benedict XIII",bio:"Juan de Yepes Álvarez was born in 1542 in Fontiveros, Spain. He joined Teresa of Ávila in reforming the Carmelite Order and was imprisoned for nine months by Carmelites opposed to the reform. During this imprisonment he composed his greatest poem, the Spiritual Canticle. His mystical writings — Dark Night of the Soul, The Ascent of Mount Carmel — describe with unsurpassed precision the soul's painful purification and union with God through what he calls the 'dark night.' His concept of spiritual desolation has offered consolation to countless souls who have experienced aridity in prayer, including Blessed Teresa of Calcutta. He was declared a Doctor of the Church in 1926."},
+  {name:"St. Bernadette Soubirous",feastMonth:4,feastDay:"April 16",patron:"Poverty, illness, Lourdes",canon:"December 8, 1933 by Pope Pius XI",bio:"Marie-Bernarde Soubirous was born in 1844 in Lourdes, France, the daughter of an impoverished miller. Between February 11 and July 16, 1858, the Blessed Virgin Mary appeared to her 18 times in the Massabielle grotto. During one apparition the Lady identified herself: 'I am the Immaculate Conception.' A miraculous spring began flowing from the grotto. Bernadette later entered the Sisters of Notre-Dame of Nevers, where she lived humbly and suffered greatly from severe asthma and bone disease. She died in 1879 at age 35. Her body, exhumed three times, was found incorrupt and is preserved at Nevers. Lourdes became the world's greatest healing shrine."},
+  {name:"St. Padre Pio (Pio of Pietrelcina)",feastMonth:9,feastDay:"September 23",patron:"Civil defense volunteers, stress relief",canon:"June 16, 2002 by Pope John Paul II",bio:"Francesco Forgione was born in 1887 in Pietrelcina, Italy. He joined the Capuchin Friars Minor and was ordained a priest in 1910. On September 20, 1918, while praying in the choir loft of his friary, he received the stigmata — the five wounds of Christ — which remained on his body for 50 years until his death in 1968. He had remarkable gifts of bilocation, reading of souls, healing, and prophecy. He heard confessions for up to 16 hours a day and founded the Casa Sollievo della Sofferenza (Home for the Relief of Suffering) hospital. Millions visited him; today his friary at San Giovanni Rotondo is among Italy's most visited destinations. He died saying 'Jesus, Mary.'"},
+  {name:"St. Mother Teresa of Calcutta",feastMonth:9,feastDay:"September 5",patron:"World Youth Day",canon:"September 4, 2016 by Pope Francis",bio:"Anjezë Gonxhe Bojaxhiu was born in 1910 in Skopje (present-day North Macedonia). At 18 she joined the Loreto Sisters and began teaching in Calcutta. On September 10, 1946 — the 'Day of Inspiration' — she received a call within a call: to leave the convent and serve the poorest of the poor. She founded the Missionaries of Charity in 1950, a congregation now present in over 133 countries. She established hospices for the dying in Calcutta's slums, caring for lepers, orphans, and the destitute. She received the Nobel Peace Prize in 1979, donating all prize money to the poor. Her posthumously published letters revealed decades of spiritual darkness — a 'dark night' she carried silently for 50 years."},
+  {name:"St. John Paul II",feastMonth:10,feastDay:"October 22",patron:"Families, World Youth Day",canon:"April 27, 2014 by Pope Francis",bio:"Karol Józef Wojtyla was born in 1920 in Wadowice, Poland. He survived both Nazi occupation and Soviet communism, secretly studying for the priesthood during the Nazi occupation. Elected Pope in 1978 — the first non-Italian pope in 455 years — his pontificate of 26 years was one of the longest in history. He survived an assassination attempt in 1981 and publicly forgave his attacker. He traveled more than any pope in history, making 104 foreign trips. His Theology of the Body revolutionized Catholic teaching on marriage and human sexuality. He led the Church through the fall of communism in Eastern Europe. He canonized 482 saints — more than all his predecessors combined."},
+  {name:"St. Maximilian Kolbe",feastMonth:8,feastDay:"August 14",patron:"Prisoners, journalists, pro-life movement",canon:"October 10, 1982 by Pope John Paul II",bio:"Rajmund Kolbe was born in 1894 in Poland. He became a Franciscan priest and zealous promoter of the Immaculate Conception, founding the Militia Immaculata and reaching millions through his publishing apostolate. In 1941 he was arrested by the Gestapo and sent to Auschwitz. When a prisoner escaped, the Nazis selected ten men to die by starvation in reprisal. One man cried out for his wife and children; Kolbe stepped forward and asked to take his place. He survived starvation for two weeks while strengthening his companions with prayer, and was finally killed by lethal injection on August 14, 1941. The man whose place he took, Franciszek Gajowniczek, was present at his canonization."},
+  {name:"St. Anthony of Padua",feastMonth:6,feastDay:"June 13",patron:"Lost articles, the poor, travelers",canon:"May 30, 1232 by Pope Gregory IX",bio:"Fernando Martins de Bulhões was born in 1195 in Lisbon, Portugal. He joined the Augustinians but, inspired by the martyrdom of Franciscan missionaries, transferred to the Franciscans. He arrived in Morocco but fell ill and was blown by storm to Sicily, where he eventually encountered St. Francis himself. He became the Order's first theology teacher. His preaching was so powerful that fish were said to leave the sea to hear him, and heretics returned to the Church. He died in 1231 at age 35 and was canonized less than a year later — the fastest canonization in Church history. His relics at Padua have been a major pilgrimage site for eight centuries."},
+  {name:"St. Cecilia",feastMonth:11,feastDay:"November 22",patron:"Music, musicians, singers",canon:"Pre-Congregation (universal veneration)",bio:"Little is historically certain about Cecilia beyond that she was a Roman martyr venerated from the earliest centuries. Tradition holds that she was a noble Roman virgin who was martyred around 230 AD. She secretly consecrated her virginity to God and is said to have sung to God in her heart on her wedding day — 'cantantibus organis, Cecilia Domino decantabat' — giving rise to her patronage of music. She was eventually beheaded after surviving multiple attempts to suffocate and drown her. The basilica of Santa Cecilia in Trastevere, Rome, is built over the site of her home. In 1599 her uncorrupt body was discovered and a sculpture by Stefano Maderno preserves her position."},
+  {name:"St. Nicholas of Myra",feastMonth:12,feastDay:"December 6",patron:"Children, sailors, prisoners, pawnbrokers",canon:"Pre-Congregation",bio:"Bishop of Myra in Lycia (present-day Turkey), Nicholas lived in the 4th century. Historical details are scarce, but he was present at the Council of Nicaea in 325. The famous legend of his secret dowry gifts to three impoverished girls — tossing bags of gold through their window at night — gave rise to the Christmas gift-giving tradition and the figure of Santa Claus (Sankt Nikolaus). He is one of the most beloved saints in both East and West, patron of an enormous range of people: children, sailors, prisoners, pawnbrokers (the three gold balls), and entire nations including Russia, Greece, and the Netherlands."},
+  {name:"St. Patrick",feastMonth:3,feastDay:"March 17",patron:"Ireland, engineers",canon:"Pre-Congregation",bio:"Born around 387, possibly in Britain or Gaul, Patrick was captured at age 16 by Irish raiders and spent six years in slavery in Ireland. He escaped and returned home, but a vision called him back to evangelize the Irish. As bishop, he traveled throughout Ireland, baptizing thousands, ordaining priests, founding monasteries, and confronting the Druids. He famously used the three-leafed shamrock to explain the Trinity. His autobiographical Confession and Letter to Coroticus are among the earliest surviving texts in Latin from the British Isles. His Breastplate prayer remains a beloved expression of Celtic Christianity. He died around 461, having transformed Ireland into a center of Christian learning."},
+  {name:"St. Benedict of Nursia",feastMonth:7,feastDay:"July 11",patron:"Europe, students, monks",canon:"1220 by Pope Honorius III",bio:"Born around 480 in Nursia, Italy, Benedict briefly studied in Rome but was horrified by the corruption of urban life and withdrew to a cave at Subiaco as a hermit. Eventually he gathered disciples and founded twelve monasteries, finally establishing the great monastery at Monte Cassino around 529. His Rule for Monasteries — the Rule of St. Benedict — is a masterpiece of spiritual wisdom and practical governance, prescribing a balanced life of prayer (Opus Dei), work, and study. It became the foundational document of Western monasticism and shaped European civilization for a millennium. Pope Paul VI declared him Patron of Europe in 1964."},
+  {name:"St. Catherine of Siena",feastMonth:4,feastDay:"April 29",patron:"Europe, Italy, fire prevention",canon:"June 29, 1461 by Pope Pius II",bio:"Caterina di Giacomo di Benincasa was born in 1347 in Siena, the 23rd of 25 children. She became a Dominican tertiary and had profound mystical experiences from childhood. Despite no formal education, she dictated thousands of letters to popes, kings, and common people, urging moral reform and unity. She is most famous for persuading Pope Gregory XI to end the Avignon papacy and return to Rome in 1377. Her Dialogue of Divine Providence is a spiritual classic. She received the stigmata invisibly so as not to cause pride. She was declared a Doctor of the Church in 1970 by Pope Paul VI — only the second woman so honored. She died in 1380 at age 33."},
+  {name:"St. Joan of Arc",feastMonth:5,feastDay:"May 30",patron:"France, soldiers",canon:"May 16, 1920 by Pope Benedict XV",bio:"Jeanne d'Arc was born in 1412 in Domrémy, France. At age 13 she began hearing the voices of St. Michael, St. Catherine, and St. Margaret commanding her to help the Dauphin liberate France from English occupation. She convinced the Dauphin of her divine mission, led the siege of Orléans to victory, and ensured his coronation at Reims. Captured by Burgundian allies of England, she was tried for heresy in an ecclesiastical court and burned at the stake in Rouen on May 30, 1431, at age 19. Her last word was 'Jesus.' In 1456 she was posthumously exonerated. Her story remains one of history's most astonishing: an illiterate peasant girl who turned the tide of the Hundred Years' War."},
+  {name:"St. Gertrude the Great",feastMonth:11,feastDay:"November 16",patron:"Souls in purgatory, travelers",canon:"Pre-Congregation (confirmed by Pope Clement XII)",bio:"Born in 1256, Gertrude entered the Benedictine monastery at Helfta, Germany, as a young girl. At age 25 she had a profound conversion experience and developed an intimate mystical relationship with Christ, particularly through devotion to His Sacred Heart. Her Spiritual Exercises and the Herald of Divine Love, dictated to a fellow nun, are foundational texts of Sacred Heart spirituality, predating St. Margaret Mary Alacoque by four centuries. The liturgical prayer 'Soul of Christ, sanctify me' (Anima Christi) has been attributed to her. She died in 1302. She is the only woman in history given the title 'the Great' by the Church."},
+  {name:"St. Teresa of Calcutta — see Mother Teresa",feastMonth:9,feastDay:"September 5",patron:"See entry",canon:"See full entry above",bio:"See the main entry for St. Mother Teresa of Calcutta."},
+  {name:"St. Monica",feastMonth:8,feastDay:"August 27",patron:"Mothers, wives, abuse victims",canon:"Pre-Congregation",bio:"Born around 331 in North Africa, Monica was given in marriage to a pagan man, Patricius, who was quick-tempered and unfaithful. Through her patient prayer and gentle persistence, she converted her husband before his death. Her great spiritual anguish was over her brilliant but dissolute son, Augustine. For over 17 years she wept and prayed for his conversion. A bishop consoled her: 'The child of so many tears cannot be lost.' Her prayers were finally answered when Augustine was baptized by St. Ambrose in 387. She died shortly after at Ostia, rejoicing that she had lived to see this day. She is the ultimate patron of persevering prayer for the conversion of loved ones."},
+  {name:"St. Ambrose of Milan",feastMonth:12,feastDay:"December 7",patron:"Bishops, bee-keepers, chandlers",canon:"Pre-Congregation",bio:"Born around 339, Ambrose was a Roman governor who, though not yet baptized, was elected Bishop of Milan by popular acclamation in 374. He was baptized, ordained through all the orders, and consecrated bishop within one week. He became one of the original four Doctors of the Church. His eloquent preaching converted St. Augustine. He introduced antiphonal chant to the West (Ambrosian chant), composed hymns, and courageously stood against emperors. When Emperor Theodosius ordered a massacre of 7,000 civilians at Thessaloniki, Ambrose denied him Communion until he publicly repented. He died in 397, dictating a commentary on Psalm 43."},
+  {name:"St. Jerome",feastMonth:9,feastDay:"September 30",patron:"Librarians, translators, scholars",canon:"Pre-Congregation",bio:"Eusebius Hieronymus was born around 342 in Stridon, Dalmatia. One of the original four Doctors of the Church, his greatest achievement was translating the Bible into Latin — the Vulgate — completed around 405, which became the standard Biblical text of the Western Church for over a thousand years. He lived as a hermit in the Syrian desert, studied Hebrew from Jewish teachers, and settled finally in Bethlehem, where he led a monastery near the Nativity grotto until his death in 420. His vast scholarship, sharp polemical style, and fierce defense of orthodoxy made him both feared and revered. His correspondence with St. Augustine — two titans debating Scripture — is among the most fascinating intellectual exchanges in Church history."},
+  {name:"St. Gregory the Great",feastMonth:9,feastDay:"September 3",patron:"Musicians, singers, popes, teachers",canon:"Pre-Congregation",bio:"Gregorius I was born around 540 to a noble Roman family. He sold his estates, founded six monasteries in Sicily, converted his Roman mansion into a monastery, and became a monk. Elected pope in 590 during plague and Lombard invasion, he is considered the last of the Latin Fathers and the first medieval pope. He reorganized the Church's vast administration with remarkable efficiency. He sent Augustine of Canterbury to England to evangelize the Anglo-Saxons. Gregorian Chant bears his name, though its exact connection to him is debated. His Pastoral Rule on the office of bishop influenced Church governance for centuries. He died in 604, exhausted by his labors."},
+  {name:"St. John Vianney",feastMonth:8,feastDay:"August 4",patron:"Parish priests, confessors",canon:"May 31, 1925 by Pope Pius XI",bio:"Jean-Baptiste-Marie Vianney was born in 1786 in Dardilly, France, during the French Revolution. A slow student who struggled to pass his Latin examinations, he was nearly rejected for priesthood but was ultimately ordained in 1815. Assigned to the remote hamlet of Ars, he transformed the parish through extraordinary holiness, severe personal austerity, and — above all — the confessional. Pilgrims came from across Europe to have their confession heard by the Curé d'Ars. In his final years he spent 16–18 hours a day in the confessional. He had a prolonged struggle with the devil (he called him 'le Grappin'), who tormented him physically for years. He died in 1859 after 40 years at Ars."},
+  {name:"St. Kateri Tekakwitha",feastMonth:7,feastDay:"July 14",patron:"Native Americans, ecology",canon:"October 21, 2012 by Pope Benedict XVI",bio:"Born in 1656 in Ossernenon (present-day New York), Kateri was the daughter of a Mohawk chief and an Algonquin Christian mother. Smallpox killed her parents when she was 4 and left her face permanently scarred and her eyesight damaged. She encountered Jesuit missionaries as a young woman and was baptized in 1676, earning hostility from her village. She fled to a Christian Mohawk community near Montreal, where she lived a life of intense prayer, fasting, and care for the sick and elderly. She died in 1680 at age 24. Witnesses reported her scarred face became luminously beautiful after death. She is the first Native North American to be canonized."},
+  {name:"St. Thomas More",feastMonth:6,feastDay:"June 22",patron:"Lawyers, politicians, statesmen",canon:"May 19, 1935 by Pope Pius XI",bio:"Born in London in 1478, Thomas More rose to become Lord Chancellor of England under Henry VIII — the highest legal office in the realm. A devoted humanist, friend of Erasmus, and author of Utopia, he was also a man of strict personal holiness who wore a hair shirt beneath his official robes. When Henry VIII sought an annulment from Catherine of Aragon and required all subjects to swear an Oath of Supremacy recognizing him as head of the English Church, More refused in silence. He was imprisoned in the Tower of London for 15 months, tried for treason, and beheaded on July 6, 1535. His final words: 'I die the King's good servant, but God's first.'"},
+  {name:"St. Thomas Becket",feastMonth:12,feastDay:"December 29",patron:"Clergy, secular clergy",canon:"February 21, 1173 by Pope Alexander III",bio:"Thomas Becket was born in London in 1118 and rose to become the most powerful churchman in England as Archbishop of Canterbury under King Henry II, his former friend. When Henry sought to expand royal control over the Church through the Constitutions of Clarendon, Becket resisted and eventually fled to France. Reconciled and returned to England in 1170, he continued to resist royal interference. Four of Henry's knights, misinterpreting the king's frustrated words, traveled to Canterbury and murdered Becket at the altar of his cathedral on December 29, 1170. He was canonized within two years. His shrine at Canterbury became the most popular pilgrimage destination in England, immortalized by Chaucer."},
+  {name:"St. Ignatius of Antioch",feastMonth:10,feastDay:"October 17",patron:"Churches in Asia Minor",canon:"Pre-Congregation",bio:"Ignatius was the third Bishop of Antioch after St. Peter and Evodius, believed by some to have known the Apostles personally. Around 107 AD he was arrested and transported to Rome to be martyred. En route he wrote seven letters to churches and individuals that are among the most precious documents of early Christianity. In these letters he emphasizes the Eucharist as 'the medicine of immortality,' insists on the authority of the bishop, and passionately desires martyrdom. He is the first writer to use the word 'Catholic' to describe the universal Church. He was fed to wild beasts in the Roman Colosseum. His letters remain primary sources for understanding the early Church."},
+  {name:"St. Polycarp of Smyrna",feastMonth:2,feastDay:"February 23",patron:"Earache sufferers",canon:"Pre-Congregation",bio:"Polycarp was Bishop of Smyrna in the 2nd century and a direct disciple of St. John the Apostle — a vital link between the Apostolic era and the Church Fathers. At about 86 years old he was arrested and brought to the stadium at Smyrna. Commanded to curse Christ, he replied: 'Eighty-six years have I served him and he has never done me any wrong. How can I blaspheme my King who saved me?' He was burned alive around 156 AD, refusing to be nailed to the stake. The account of his martyrdom, the Martyrdom of Polycarp, is the oldest surviving account of a Christian martyrdom outside the New Testament."},
+  {name:"St. Justin Martyr",feastMonth:6,feastDay:"June 1",patron:"Philosophers, apologists",canon:"Pre-Congregation",bio:"Born around 100 AD in Samaria, Justin was a pagan philosopher who converted to Christianity after an encounter with an old man who spoke to him of the Hebrew prophets and Christ. He continued to wear the philosopher's cloak as a Christian, establishing a school in Rome. His Apologies, addressed to Emperor Antoninus Pius, and his Dialogue with Trypho are foundational documents of Christian intellectual engagement with the surrounding culture. His account of Sunday Eucharistic worship is the earliest detailed description we possess. He was martyred in Rome around 165 AD under Marcus Aurelius. He is among the first to articulate the relationship between Greek philosophy and Christian revelation."},
+  {name:"St. Elizabeth of Hungary",feastMonth:11,feastDay:"November 17",patron:"Bakers, charitable workers, hospitals",canon:"May 27, 1235 by Pope Gregory IX",bio:"Born in 1207, Elizabeth was a princess of Hungary, daughter of King Andrew II. At 14 she was married to Ludwig IV of Thuringia; it was an arranged political marriage that became, by all accounts, a deeply loving union. As a young noblewoman she was famous for stripping the palace to feed the poor during famines. When Ludwig died of plague on Crusade in 1227, she was expelled from the court by her brother-in-law. She joined the Third Order of St. Francis and, under the harsh spiritual direction of Conrad of Marburg, devoted herself to caring for the sick in a hospital she founded at Marburg. She died in 1231 at age 24, exhausted by her penances and labors."},
+  {name:"St. Louis IX of France",feastMonth:8,feastDay:"August 25",patron:"French monarchy, crusaders, barbers",canon:"1297 by Pope Boniface VIII",bio:"Born in 1214, Louis IX was King of France from 1226 until his death and is the only French king canonized as a saint. He led the Seventh and Eighth Crusades. Within France, he was renowned for personal holiness, love of the poor (washing the feet of lepers), and justice: he established the Sainte-Chapelle in Paris to house relics of the Passion, reformed the legal system, and founded hospitals. He wore a hair shirt and fasted extensively. He died at Tunis in 1270 during the Eighth Crusade, having contracted dysentery, reportedly speaking his last words about the welfare of his people: 'I will go into thy house; I will worship toward thy holy temple.'"},
+  {name:"St. Francis Xavier",feastMonth:12,feastDay:"December 3",patron:"Foreign missions, Japan, Navarre",canon:"March 12, 1622 by Pope Gregory XV",bio:"Francisco de Jasso y Azpilcueta was born in 1506 in the Kingdom of Navarre, Spain. A co-founder of the Jesuits with St. Ignatius, he became the greatest missionary since St. Paul. Between 1542 and his death in 1552 he evangelized in India, the Malay Peninsula, the Spice Islands, and Japan, baptizing tens of thousands. He died on the island of Shangchuan attempting to enter China. His methods of inculturation — adapting the faith to local customs — were revolutionary. He wrote that what grieved him most was that in the great universities of Europe there were scholars who could help Asia but instead pursued their own comfort. His incorrupt arm is venerated in Rome."},
+  {name:"St. Philip Neri",feastMonth:5,feastDay:"May 26",patron:"Rome, humor, joy",canon:"March 12, 1622 by Pope Gregory XV",bio:"Filippo Romolo de' Neri was born in Florence in 1515. He went to Rome and for years lived as a layman, working among the poor and sick at the Hospital of Santo Spirito and evangelizing the streets. He was ordained a priest at 36 and became famous for his joyful, unconventional approach to holiness — humor, wit, and pranks as spiritual tools. He founded the Congregation of the Oratory (Oratorians) and his informal gatherings of prayer, scripture, and sacred music gave rise to the musical form 'oratorio.' His confessional drew thousands. He reportedly had to hold his hand to his heart to slow its beating during Mass. He died in 1595 and is called 'Apostle of Rome' and 'Padre della gioia' — Father of Joy."},
+  {name:"St. Robert Bellarmine",feastMonth:9,feastDay:"September 17",patron:"Canon lawyers, catechists",canon:"June 29, 1930 by Pope Pius XI",bio:"Roberto Francesco Romolo Bellarmino was born in 1542 in Montepulciano, Italy. A Jesuit, he became the greatest controversialist of the Counter-Reformation, his three-volume work Disputations on the Controversies of the Christian Faith systematically defending Catholic doctrine against Protestant objections. He was appointed a cardinal against his wishes and served as Archbishop of Capua. He is noted for his defense of papal authority, his charitable use of his own income for the poor, and his pastoral care in writing simple catechisms for children and the uneducated. He supervised the trial of Galileo in 1616. He died in 1621 and was declared a Doctor of the Church in 1931."},
+  {name:"St. Charles Borromeo",feastMonth:11,feastDay:"November 4",patron:"Catechists, seminarians, bishops",canon:"November 1, 1610 by Pope Paul V",bio:"Carlo Borromeo was born in 1538 at Arona, Italy, to a noble family. At 22, his uncle Pope Pius IV made him a cardinal and Archbishop of Milan — a scandalous appointment, given his youth. But Charles confounded his critics by living as an ascetic reformer. He was the driving force behind the Council of Trent's final sessions, and spent his whole pontificate vigorously implementing its decrees in Milan. He founded seminaries, visited every parish, fasted and prayed severely, and during the plague of 1576–77 personally cared for the sick while other officials fled. He died in 1584 at age 46, worn out by his labors. He is considered a model of episcopal reform."},
+  {name:"St. Vincent de Paul",feastMonth:9,feastDay:"September 27",patron:"Charitable societies, prisoners, hospitals",canon:"June 16, 1737 by Pope Clement XII",bio:"Vincent de Paul was born in 1581 in Pouy, Gascony, France, of peasant stock. He was briefly enslaved by Turkish pirates. After years of gradual conversion, he devoted himself to serving the poor with extraordinary energy. He founded the Congregation of the Mission (Vincentians/Lazarists) for the training of priests and missions to the poor, and with St. Louise de Marillac founded the Daughters of Charity — the largest congregation of women religious in the world. He organized relief for famine victims, ransomed Christian slaves from North Africa, reformed the French clergy, and established hospitals for the abandoned poor. He died in 1660. The Society of St. Vincent de Paul, founded in 1833, perpetuates his work globally."},
+  {name:"St. Margaret Mary Alacoque",feastMonth:10,feastDay:"October 16",patron:"Devotees of Sacred Heart",canon:"May 13, 1920 by Pope Benedict XV",bio:"Marie-Alacoque was born in 1647 in Lautecour, France. She entered the Visitation convent at Paray-le-Monial in 1671. Between 1673 and 1675, Christ appeared to her in a series of visions, showing her His Sacred Heart surrounded by flames and a crown of thorns, asking for a feast in honor of the Sacred Heart and the practice of the First Friday devotions. Her spiritual director, St. Claude de la Colombière, believed her visions and defended her. She died in 1690. Her mystical experiences became the foundation of modern devotion to the Sacred Heart, eventually leading to the establishment of the Feast of the Sacred Heart for the universal Church."},
+  {name:"St. John Bosco",feastMonth:1,feastDay:"January 31",patron:"Youth, salesians, editors",canon:"April 1, 1934 by Pope Pius XI",bio:"Giovanni Melchiorre Bosco was born in 1815 in Becchi, Piedmont, Italy, the son of a poor peasant. He was orphaned young and worked as a laborer while pursuing his education and priesthood. Ordained in 1841, he devoted his life to the education and welfare of poor working boys in Turin's industrial slums. His 'Salesian' system of education emphasized reason, religion, and loving kindness — in contrast to the harsh physical punishment common in schools. He founded the Salesians of Don Bosco in 1859. Credited with over 300 fulfilled prophecies and miracles, he died in 1888, having established educational works across three continents."},
+  {name:"St. Louise de Marillac",feastMonth:3,feastDay:"March 15",patron:"Social workers, widows",canon:"March 11, 1934 by Pope Pius XI",bio:"Born in Paris in 1591, possibly illegitimately, Louise de Marillac married Antoine Le Gras in 1613 and had one son. After his death in 1625, she came under the spiritual direction of St. Vincent de Paul. Together they founded the Daughters of Charity in 1633 — a revolutionary new form of religious life in which women were not cloistered but 'went to the streets' to care for the poor. Under her leadership the Daughters established hospitals, schools, and relief programs across France. She trained hundreds of women from peasant backgrounds to be professional caregivers — a first in Church history. She died in 1660, only months before her beloved friend Vincent de Paul."},
+  {name:"St. Gianna Beretta Molla",feastMonth:4,feastDay:"April 28",patron:"Mothers, physicians, unborn children",canon:"May 16, 2004 by Pope John Paul II",bio:"Gianna Beretta Molla was born in 1922 in Magenta, Italy. A physician and mother of three, she refused an abortion when diagnosed with a uterine fibroma during her fourth pregnancy. Given the choice between a hysterectomy (which would kill the child) and an operation to remove only the fibroid (which risked her own life), she chose the operation that saved her baby. Her daughter Gianna Emanuela was born on April 21, 1962; the mother died seven days later of septic peritonitis, repeating Christ's words: 'If you want my life, take it.' She is the first lay medical professional canonized as a saint. Her husband and daughter attended her canonization."},
+  {name:"St. Óscar Romero",feastMonth:3,feastDay:"March 24",patron:"El Salvador, the poor, persecuted",canon:"October 14, 2018 by Pope Francis",bio:"Óscar Arnulfo Romero y Galdámez was born in 1917 in Ciudad Barrios, El Salvador. Initially seen as a conservative choice for Archbishop of San Salvador in 1977, he was transformed by the assassination of his friend Fr. Rutilio Grande. He became the outspoken voice of the poor and oppressed, broadcasting his homilies by radio to the entire country and denouncing human rights violations by the Salvadoran military. On March 24, 1980, he was shot through the heart while celebrating Mass in the chapel of a cancer hospital. He had reportedly said the day before: 'A bishop will die, but the Church of God — the people — will never perish.' He is venerated as a martyr of charity and justice."},
+  {name:"St. Edith Stein (Teresa Benedicta of the Cross)",feastMonth:8,feastDay:"August 9",patron:"Europe, martyrs",canon:"October 11, 1998 by Pope John Paul II",bio:"Edith Stein was born in 1891 in Breslau (present-day Wrocław, Poland) into a devout Jewish family. She became one of Germany's foremost philosophers, a student and assistant to Edmund Husserl. Reading the autobiography of St. Teresa of Ávila prompted her conversion to Catholicism in 1922. She entered the Carmelites in 1934, taking the name Teresa Benedicta of the Cross. After Kristallnacht, she was transferred to the Netherlands. In 1942, the Dutch bishops publicly condemned the Nazi deportations of Jews; in retaliation, the Nazis arrested Jewish converts to Christianity. Edith and her sister Rosa were taken to Auschwitz and died in the gas chambers on August 9, 1942. She was declared Co-Patroness of Europe in 1999."},
+];
+
+// ---- POPES DATA ----
+const popesData = [
+  // Early Church
+  {num:1,name:"St. Peter",birth:"Simon Bar-Jonah",nat:"Galilean (Jewish)",start:"c. 30",end:"c. 64–68",era:"early",legacy:"Chief Apostle, first Bishop of Rome, martyred crucified upside-down under Nero. The rock upon whom Christ promised to build his Church."},
+  {num:2,name:"St. Linus",birth:"Linus",nat:"Italian",start:"c. 67",end:"c. 76",era:"early",legacy:"Second pope, named by Paul in 2 Timothy 4:21. Led the Church in the aftermath of Peter's martyrdom."},
+  {num:3,name:"St. Anacletus",birth:"Anacletus",nat:"Greek",start:"c. 76",end:"c. 88",era:"early",legacy:"Organized the Roman church into parishes. Martyred under Domitian."},
+  {num:4,name:"St. Clement I",birth:"Clement",nat:"Roman",start:"c. 88",end:"c. 99",era:"early",legacy:"Wrote a famous letter to the Corinthians (1 Clement), exercising papal authority — earliest document of papal intervention in another church."},
+  {num:5,name:"St. Evaristus",birth:"Evaristus",nat:"Greek (Jewish origin)",start:"c. 99",end:"c. 107",era:"early",legacy:"Divided Rome into parishes with assigned clergy. Martyred under Trajan."},
+  {num:13,name:"St. Victor I",birth:"Victor",nat:"African (Berber)",start:"189",end:"199",era:"early",legacy:"First African pope and first to use Latin rather than Greek as the Church's official language. Threatened to excommunicate Eastern churches over the dating of Easter."},
+  {num:32,name:"St. Sylvester I",birth:"Sylvester",nat:"Roman",start:"314",end:"335",era:"early",legacy:"Pope during the reign of Constantine the Great. The Council of Nicaea (325) was held during his pontificate, though Sylvester himself was represented by legates."},
+  {num:33,name:"St. Mark",birth:"Marcus",nat:"Roman",start:"336",end:"336",era:"early",legacy:"Pontificate lasted only nine months. Founded the Basilica of San Marco in Rome."},
+  {num:37,name:"St. Damasus I",birth:"Damasus",nat:"Spanish",start:"366",end:"384",era:"early",legacy:"Commissioned St. Jerome to produce the Vulgate Bible. Promoted Rome's primacy and the cults of the Roman martyrs. A great patron of Christian art and letters."},
+  {num:40,name:"St. Innocent I",birth:"Innocent",nat:"Italian (Albano)",start:"401",end:"417",era:"early",legacy:"Stressed papal primacy vigorously. Rome was sacked by the Visigoths under Alaric in 410 during his pontificate."},
+  {num:45,name:"St. Leo I (the Great)",birth:"Leo",nat:"Italian (Tuscany)",start:"440",end:"461",era:"early",legacy:"One of only two popes called 'the Great.' His Tome on the Incarnation was foundational at the Council of Chalcedon (451). He personally turned back Attila the Hun from Rome in 452."},
+  {num:54,name:"St. Gregory I (the Great)",birth:"Gregory",nat:"Roman",start:"590",end:"604",era:"early",legacy:"The other pope called 'the Great.' Reformed the liturgy (Gregorian chant), sent Augustine to England, organized pastoral care, wrote the Dialogues and Pastoral Rule. One of the four Latin Doctors."},
+  // Medieval
+  {num:64,name:"St. Zachary",birth:"Zacharias",nat:"Greek",start:"741",end:"752",era:"medieval",legacy:"Approved Pepin's seizure of the Frankish throne from the Merovingians, laying the groundwork for the Carolingian dynasty."},
+  {num:65,name:"Stephen II (III)",birth:"Stephen",nat:"Roman",start:"752",end:"757",era:"medieval",legacy:"Sought Frankish protection against the Lombards. Pepin donated conquered Lombard territory to the papacy — the origin of the Papal States."},
+  {num:72,name:"St. Leo III",birth:"Leo",nat:"Roman",start:"795",end:"816",era:"medieval",legacy:"Crowned Charlemagne Holy Roman Emperor on Christmas Day 800 — a momentous act that shaped European civilization for centuries."},
+  {num:99,name:"Nicholas I (the Great)",birth:"Nicholas",nat:"Roman",start:"858",end:"867",era:"medieval",legacy:"Asserted papal authority over kings and patriarchs. Confronted Patriarch Photius of Constantinople and King Lothair II of Lorraine. A towering figure of papal power."},
+  {num:130,name:"Gregory VII (St.)",birth:"Hildebrand of Sovana",nat:"Italian (Tuscany)",start:"1073",end:"1085",era:"medieval",legacy:"The Gregorian Reform. Fought lay investiture, forcing Emperor Henry IV to stand barefoot in the snow at Canossa in 1077 to seek absolution. Defined medieval papal supremacy."},
+  {num:159,name:"Innocent III",birth:"Lotario dei Conti di Segni",nat:"Italian",start:"1198",end:"1216",era:"medieval",legacy:"Often considered the most powerful medieval pope. Called the Fourth Lateran Council (1215), launched the Fourth and Fifth Crusades, approved the Franciscans and Dominicans."},
+  {num:178,name:"Boniface VIII",birth:"Benedetto Caetani",nat:"Italian",start:"1294",end:"1303",era:"medieval",legacy:"His bull Unam Sanctam (1302) made the most extreme claims of papal authority. Was arrested by Philip IV of France's agents (the 'Slap of Anagni') and died shortly after."},
+  {num:196,name:"Martin V",birth:"Oddone Colonna",nat:"Italian (Rome)",start:"1417",end:"1431",era:"medieval",legacy:"Elected at the Council of Constance, ending the Great Western Schism during which three men simultaneously claimed to be pope. Restored the papacy to Rome."},
+  // Renaissance-Baroque
+  {num:209,name:"Pius II",birth:"Enea Silvio Piccolomini",nat:"Italian (Siena)",start:"1458",end:"1464",era:"renaissance",legacy:"A Renaissance humanist and author. Tried to launch a crusade against the Turks after the Fall of Constantinople. Canonized Catherine of Siena. Issued the first bull condemning the slave trade."},
+  {num:213,name:"Sixtus IV",birth:"Francesco della Rovere",nat:"Italian (Liguria)",start:"1471",end:"1484",era:"renaissance",legacy:"Built the Sistine Chapel. Authorized the Spanish Inquisition and issued the bull allowing Masses for the dead. A great patron of Renaissance art."},
+  {num:214,name:"Innocent VIII",birth:"Giovanni Battista Cybo",nat:"Italian (Genoa)",start:"1484",end:"1492",era:"renaissance",legacy:"Issued the Summis desiderantes affectibus bull authorizing witch trials. Notable for nepotism and political maneuvering. The first pope to acknowledge his illegitimate children publicly."},
+  {num:216,name:"Julius II",birth:"Giuliano della Rovere",nat:"Italian (Liguria)",start:"1503",end:"1513",era:"renaissance",legacy:"The 'Warrior Pope' who personally led armies. Commissioned Michelangelo to paint the Sistine Chapel ceiling and Raphael to paint the Vatican stanze. Began rebuilding St. Peter's Basilica."},
+  {num:217,name:"Leo X",birth:"Giovanni di Lorenzo de' Medici",nat:"Italian (Florence)",start:"1513",end:"1521",era:"renaissance",legacy:"Son of Lorenzo the Magnificent. His pontificate saw the beginning of the Protestant Reformation. He excommunicated Martin Luther in 1521. Reportedly said: 'God has given us the papacy, let us enjoy it.'"},
+  {num:220,name:"Clement VII",birth:"Giulio di Giuliano de' Medici",nat:"Italian (Florence)",start:"1523",end:"1534",era:"renaissance",legacy:"The Sack of Rome by Charles V's troops in 1527 shattered the papacy's prestige. Refused Henry VIII's annulment, precipitating the English Reformation."},
+  {num:221,name:"Paul III",birth:"Alessandro Farnese",nat:"Italian (Rome)",start:"1534",end:"1549",era:"renaissance",legacy:"Convened the Council of Trent (1545), the Catholic Church's great response to the Protestant Reformation. Approved the Jesuits. Commissioned Michelangelo to paint the Last Judgment."},
+  {num:224,name:"Pius IV",birth:"Giovanni Angelo Medici",nat:"Italian (Milan)",start:"1559",end:"1565",era:"renaissance",legacy:"Successfully concluded the Council of Trent. His nephew St. Charles Borromeo was the driving force of the Council's implementation. Issued the Creed of Trent."},
+  {num:225,name:"Pius V (St.)",birth:"Antonio Michele Ghislieri",nat:"Italian (Lombardy)",start:"1566",end:"1572",era:"renaissance",legacy:"Implemented the Council of Trent's decrees rigorously, reformed the liturgy (Roman Missal of 1570), organized the Holy League against the Ottoman Turks, whose defeat at Lepanto he attributed to the Rosary."},
+  {num:230,name:"Urban VIII",birth:"Maffeo Barberini",nat:"Italian (Florence)",start:"1623",end:"1644",era:"renaissance",legacy:"Canonized many saints including Elizabeth of Portugal and Andrew Corsini. Presided over the trial of Galileo (1633). Expanded and beautified the Vatican. A great patron of Gian Lorenzo Bernini."},
+  // Modern
+  {num:252,name:"Pius VI",birth:"Giovanni Angelo Braschi",nat:"Italian",start:"1775",end:"1799",era:"modern",legacy:"Pontificate dominated by the French Revolution. Napoleon stripped him of the Papal States; he died a prisoner in Valence, France. Condemned Josephinism and Febronianism."},
+  {num:253,name:"Pius VII",birth:"Barnaba Niccolò Maria Luigi Chiaramonti",nat:"Italian",start:"1800",end:"1823",era:"modern",legacy:"Negotiated the Concordat with Napoleon (1801) and crowned him Emperor in 1804. Later imprisoned by Napoleon at Fontainebleau. Restored the Society of Jesus (Jesuits) in 1814."},
+  {num:255,name:"Gregory XVI",birth:"Bartolomeo Alberto Cappellari",nat:"Italian (Veneto)",start:"1831",end:"1846",era:"modern",legacy:"A scholarly Camaldolese monk who resisted political liberalism. Condemned the slave trade in In Supremo Apostolatus. Promoted Catholic missions worldwide. A poor administrator of the Papal States."},
+  {num:256,name:"Pius IX (Blessed)",birth:"Giovanni Maria Mastai-Ferretti",nat:"Italian (Marche)",start:"1846",end:"1878",era:"modern",legacy:"The longest reigning elected pope (31 years). Defined the dogma of the Immaculate Conception (1854). Convened Vatican I, which defined papal infallibility (1870). Lost the Papal States to Italian unification. Beatified by John Paul II in 2000."},
+  {num:257,name:"Leo XIII",birth:"Vincenzo Gioacchino Raffaele Luigi Pecci",nat:"Italian (Lazio)",start:"1878",end:"1903",era:"modern",legacy:"His encyclical Rerum Novarum (1891) founded modern Catholic Social Teaching. Encouraged Thomistic philosophy and promoted the Rosary. Opened the Vatican Archives to scholars."},
+  {num:258,name:"Pius X (St.)",birth:"Giuseppe Melchiorre Sarto",nat:"Italian (Veneto)",start:"1903",end:"1914",era:"modern",legacy:"Lowered the age for first Communion, encouraged frequent Communion, reformed the Roman Breviary and Missal, and condemned Modernism in Pascendi Dominici Gregis. The last pope to be canonized."},
+  {num:259,name:"Benedict XV",birth:"Giacomo della Chiesa",nat:"Italian (Genoa)",start:"1914",end:"1922",era:"modern",legacy:"Pontificate dominated by World War I. Called for peace negotiations and organized massive relief efforts. The warring powers largely ignored him; the Ottoman Empire called him 'the Protector of Christians.'"},
+  {num:260,name:"Pius XI",birth:"Ambrogio Damiano Achille Ratti",nat:"Italian (Lombardy)",start:"1922",end:"1939",era:"modern",legacy:"Signed the Lateran Treaty (1929) establishing Vatican City as an independent state. Condemned Fascism (Non abbiamo bisogno), Nazism (Mit brennender Sorge), and Communism (Divini Redemptoris) in the same year (1937)."},
+  {num:261,name:"Pius XII (Venerable)",birth:"Eugenio Maria Giuseppe Giovanni Pacelli",nat:"Italian (Rome)",start:"1939",end:"1958",era:"modern",legacy:"His role during the Holocaust remains controversial. He defined the dogma of the Assumption (1950). He reformed the Easter Vigil and Holy Week liturgy. Opened significant biblical scholarship with Divino Afflante Spiritu."},
+  {num:262,name:"St. John XXIII",birth:"Angelo Giuseppe Roncalli",nat:"Italian (Lombardy)",start:"1958",end:"1963",era:"modern",legacy:"'Good Pope John' convened the Second Vatican Council in 1962. Known for pastoral warmth, his encyclicals Mater et Magistra and Pacem in Terris addressed social justice. Canonized by Pope Francis in 2014."},
+  {num:263,name:"Paul VI (Blessed)",birth:"Giovanni Battista Enrico Antonio Maria Montini",nat:"Italian (Lombardy)",start:"1963",end:"1978",era:"modern",legacy:"Guided Vatican II to completion. Issued Humanae Vitae (1968), reaffirming the Church's opposition to artificial contraception. Made the Mass of Paul VI (Novus Ordo) the ordinary form of the Roman Rite. Beatified in 2018."},
+  {num:264,name:"John Paul I (Servant of God)",birth:"Albino Luciani",nat:"Italian (Veneto)",start:"1978",end:"1978",era:"modern",legacy:"The 'Smiling Pope' reigned only 33 days before dying suddenly in his sleep. His humility, simplicity, and joyfulness made a profound impression in his brief pontificate."},
+  {num:265,name:"St. John Paul II",birth:"Karol Józef Wojtyla",nat:"Polish",start:"1978",end:"2005",era:"modern",legacy:"First non-Italian pope in 455 years. His 26-year pontificate included the fall of Soviet communism, a historic apology for the Church's historical sins, Theology of the Body, and the canonization of 482 saints. Survived assassination attempt in 1981. Canonized by Pope Francis in 2014."},
+  {num:266,name:"Benedict XVI",birth:"Joseph Aloisius Ratzinger",nat:"German (Bavaria)",start:"2005",end:"2013",era:"modern",legacy:"First pope to resign since Gregory XII in 1415. A profound theologian, he wrote Jesus of Nazareth, addressed the clergy abuse crisis, and authorized wider use of the Traditional Latin Mass (Summorum Pontificum, 2007). Died December 31, 2022."},
+  {num:267,name:"Francis",birth:"Jorge Mario Bergoglio",nat:"Argentine (Italian heritage)",start:"2013",end:"present",era:"modern",legacy:"First Jesuit pope, first from the Americas, first from the Southern Hemisphere. His pontificate has emphasized mercy (Year of Mercy), ecology (Laudato Si'), synodality, and outreach to the margins of society. He canonized numerous modern saints and continued the Church's global engagement."},
+];
+
+// ---- MIRACLES & APPARITIONS DATA ----
+const miraclesData = [
+  {name:"Our Lady of Guadalupe",location:"Tepeyac Hill, Mexico",year:1531,type:"Apparition",approval:"Fully Approved (1555 by Bishop Zumárraga's successors)",tags:["Apparition"],desc:"Between December 9–12, 1531, the Blessed Virgin Mary appeared four times to a recently baptized indigenous peasant, Juan Diego. She identified herself as 'the ever-virgin Holy Mary, Mother of the True God.' At her command, Juan Diego filled his tilma (cloak) with Castilian roses blooming in winter. When he opened it before the bishop, the roses spilled out and an image of Our Lady was miraculously imprinted on the fabric. The tilma, made of coarse ayate fiber, which should have disintegrated within 20 years, survives today. Scientific studies have found the pigments are not of known mineral, animal, or vegetable origin; the image contains no brushstrokes; the eyes contain reflected images of multiple people; and the fabric has no underpainting. Approximately 9 million indigenous people converted to Christianity in the decade following the apparitions."},
+  {name:"Miracle of Lanciano",location:"Lanciano, Italy",year:700,type:"Eucharistic Miracle",approval:"Fully Approved; scientifically studied 1970–71",tags:["Eucharistic Miracle"],desc:"Around 700 AD, a Basilian monk in Lanciano was struggling with doubts about the Real Presence. During Mass, as he spoke the words of Consecration, the host was visibly transformed into flesh and the wine into visible blood that coagulated into five pellets. The flesh and blood have been preserved for over 1,300 years. In 1970–71, Prof. Odoardo Linoli of the University of Siena conducted a thorough scientific analysis. His findings: the flesh is real human heart tissue; the blood is genuine human blood, type AB (the same type found on the Shroud of Turin); the proteins are in the same proportion as in fresh blood; there are no preservatives of any kind; the flesh contains myocardium muscle. The miracle was studied by the Higher Council of the World Health Organization in 1973, which confirmed the findings."},
+  {name:"Our Lady of Lourdes",location:"Lourdes, France",year:1858,type:"Apparition",approval:"Fully Approved by Bishop Laurence, 1862",tags:["Apparition","Healing"],desc:"From February 11 to July 16, 1858, the Blessed Virgin Mary appeared 18 times to 14-year-old Bernadette Soubirous in the Grotto of Massabielle. On February 25, the Lady instructed Bernadette to 'go drink at the spring and wash yourself there' — Bernadette scraped at the earth, and a miraculous spring emerged which still flows today. On March 25, the Lady identified herself: 'I am the Immaculate Conception' — a dogma defined only four years earlier that Bernadette could not have known. The spring at Lourdes has been the site of thousands of claimed miraculous healings; as of 2023, the Church has officially recognized 70 miracles after rigorous medical investigation through the International Medical Committee of Lourdes (CMIL). Lourdes receives approximately 6 million pilgrims annually."},
+  {name:"Our Lady of Fatima",location:"Fatima, Portugal",year:1917,type:"Apparition",approval:"Fully Approved by Bishop da Silva, 1930",tags:["Apparition","Sign"],desc:"From May 13 to October 13, 1917, the Virgin Mary appeared six times to three shepherd children — Lúcia dos Santos (10), Francisco Marto (9), and Jacinta Marto (7) — in the Cova da Iria. She asked for the Rosary, penance, the First Saturday Communions, and the Consecration of Russia. She entrusted them with the Three Secrets of Fatima. On October 13, approximately 70,000 people — believers and skeptics alike — witnessed the Miracle of the Sun: the sun appeared to spin, change colors, and 'dance' in the sky. Witnesses 40 km away also reported the phenomenon. The children received prophecies of the end of World War I, the onset of World War II, and the attempted assassination of a pope. Jacinta and Francisco, who died young, were beatified in 2000 and canonized in 2017. Lúcia became a Carmelite nun and died in 2005."},
+  {name:"Miracle of the Sun (Fatima)",location:"Cova da Iria, Fatima, Portugal",year:1917,type:"Sign",approval:"Corroborated by thousands of eyewitnesses; newspaper accounts",tags:["Sign","Apparition"],desc:"On October 13, 1917, the date and location had been predicted three months earlier by the children of Fatima. A crowd estimated at 70,000 gathered in the rain. After Lúcia led the crowd in the Rosary, she reported a vision of the Holy Family. Then, at approximately noon, the sun appeared to break through the clouds and 'dance' — spinning, emitting multicolored light, and making three plunging motions toward the earth. Terrified witnesses thought the world was ending. The event lasted approximately ten minutes. Remarkably, the previously soaked clothes and muddy ground were found to be completely dry. The phenomena were reported in secular newspapers including O Século and O Dia, both of which had sent skeptical reporters. The event has never been scientifically explained within the natural order."},
+  {name:"Incorruptibility of St. Bernadette",location:"Nevers, France",year:1879,type:"Other",approval:"Verified by official Church examinations",tags:["Other","Healing"],desc:"St. Bernadette Soubirous died on April 16, 1879, at the convent of Saint-Gildard in Nevers. Her body was exhumed three times — in 1909, 1919, and 1925 — as required by the beatification and canonization process. Each time, her body was found to be in an extraordinary state of preservation. Medical reports noted that while there was some blackening of the hands and face and some shrinkage, the body had not decomposed in the normal manner. It was noted that the body had been in damp conditions. After the 1925 examination, a light wax mask was applied to her face and hands to protect them. Her body, dressed in her religious habit, is preserved in a glass reliquary in the chapel of the Sisters of Notre Dame in Nevers and is viewed by pilgrims every day."},
+  {name:"Eucharistic Miracle of Buenos Aires",location:"Buenos Aires, Argentina",year:1996,type:"Eucharistic Miracle",approval:"Approved; studied by Dr. Frederick Zugibe",tags:["Eucharistic Miracle"],desc:"On August 18, 1996, in the parish of Santa María, a consecrated host was found discarded on a candleholder. The then-archbishop, Jorge Mario Bergoglio (later Pope Francis), had it placed in water and kept in the tabernacle. On August 26, it began transforming into a bloody substance. It was photographed in 1996. In 1999, a sample was sent to New York for scientific analysis by Dr. Frederick Zugibe, a forensic pathologist and expert in the heart. Without being told what he was analyzing, Zugibe determined it was living human heart tissue, specifically myocardium from the left ventricle. The tissue showed signs of being severely traumatized, as if the person had been beaten about the chest. The blood type was AB — the same as the Shroud of Turin and the Lanciano miracle."},
+  {name:"Our Lady of Zeitoun",location:"Zeitoun, Cairo, Egypt",year:1968,type:"Apparition",approval:"Approved by Pope Cyril VI of Alexandria and Pope Paul VI, 1968",tags:["Apparition"],desc:"Between April 2, 1968 and 1971, the Blessed Virgin Mary was seen appearing on the domes and roof of the Coptic Orthodox Church of Our Lady in Zeitoun, Cairo. The apparitions were seen by millions of people of all faiths — Christians, Muslims, and Jews — over the course of about three years. Egyptian president Gamal Abdel Nasser witnessed the phenomenon. The apparitions were photographed and filmed, with images broadcast on Egyptian state television. The figure appeared as a luminous silhouette, sometimes accompanied by what appeared to be doves of light. The apparitions occurred almost nightly for the first few months. No natural or artificial explanation has been found for the luminous phenomena. They were formally approved by both Pope Cyril VI of Alexandria and later confirmed by the Vatican."},
+  {name:"Tilma of Juan Diego",location:"Basilica of Our Lady of Guadalupe, Mexico City",year:1531,type:"Other",approval:"Fully Approved",tags:["Other","Apparition"],desc:"The tilma (cloak) of Juan Diego bearing the miraculous image of Our Lady of Guadalupe has been the subject of extensive scientific investigation. In 1936, Nobel laureate Richard Kuhn analyzed the pigments and found they corresponded to no known colorings of natural, animal, mineral, or synthetic origin. In 1956, Dr. Javier Torroella Bueno found the fabric's temperature was constant at 36.6°C — normal human body temperature. In 1979, NASA infrared studies found no sketch, sizing, or paint brush strokes. In 1979, Dr. José Aste Tönsmann digitally enlarged the eyes of the image 2,500 times and found detailed reflected images of multiple figures in the eyes — consistent with what the human eye would have reflected at the moment Juan Diego unfolded his tilma before Bishop Zumárraga. The image has faded only in areas restored by human hands."},
+  {name:"Incorruptibles: St. Catherine of Siena",location:"Rome / Siena, Italy",year:1381,type:"Other",approval:"Verified by Church process",tags:["Other"],desc:"St. Catherine of Siena died in Rome on April 29, 1380. Her body was claimed by both Rome and Siena. Her head and thumb were taken to Siena and her body remained in Rome, preserved in the Basilica of Santa Maria sopra Minerva where it is still venerated today. The preservation of her body is considered miraculous. Joan Carroll Cruz's landmark work The Incorruptibles (1977) documents over 100 cases of miraculous bodily preservation recognized by the Church. Scientific examination of these saints typically reveals no evidence of embalming, no artificial preservatives, and inexplicable freshness even centuries after burial. The Church does not require incorruptibility as evidence of sanctity, but it is regarded as a special sign of God's favor. Other noted incorruptibles include St. Francis Xavier and St. Pius X."},
+  {name:"Miracle of Calanda",location:"Calanda, Spain",year:1640,type:"Healing",approval:"Fully Approved after rigorous investigation",tags:["Healing"],desc:"Miguel Juan Pellicer of Calanda had his right leg amputated below the knee in 1637 after a cart accident. The leg was buried in the hospital cemetery. On March 29, 1640, his parents awoke to find him sleeping peacefully with both legs intact, bearing scars of the original wounds but otherwise whole. The miraculous restoration was investigated by an episcopal tribunal for three years before being declared a miracle. Medical experts confirmed: the stump observed by doctors was now a fully formed leg. Hospital records confirmed the amputation. The buried leg and stump were examined. The regenerated leg bore a scar identical to a wound Miguel had received as a child. This remains one of the most thoroughly documented cases of miraculous physical restoration in Church history. King Philip IV of Spain personally investigated the case."},
+  {name:"Eucharistic Miracle of Siena",location:"Siena, Italy",year:1730,type:"Eucharistic Miracle",approval:"Scientifically analyzed in 1914 and 1951",tags:["Eucharistic Miracle"],desc:"On August 14, 1730, thieves broke into the church of St. Francis in Siena and stole the ciborium containing 351 consecrated hosts. Three days later, the stolen hosts were found among the donation boxes of the Cathedral of San Francesco. Miraculously, although scattered without any means of preservation, the hosts did not corrupt. In 1914 and again in 1951, scientific analyses were conducted by Professor Siro Grimaldi and Professor Eugenio Bertini respectively. Both studies confirmed that the hosts, despite being nearly 220 years old at the time of the second study, showed no sign of decomposition, no mold or corruption, and the same nutritive properties as fresh unleavened bread. The hosts remain at the Oratory of San Bernardino in Siena to this day — nearly 300 years after the theft — without any artificial preservation."},
+];
+
+// ---- PRAYER DATA ----
+const prayerData = [
+  {category:"Liturgical Prayer",name:"The Holy Mass (Eucharist)",desc:"The summit and source of Christian life, the Mass is the re-presentation of Christ's sacrifice on Calvary. It consists of two main parts: the Liturgy of the Word (Scripture readings, homily, Creed, Prayers of the Faithful) and the Liturgy of the Eucharist (Offertory, Consecration, Communion). The Mass is not merely a memorial but a true sacrifice in which Christ offers Himself to the Father under the appearances of bread and wine. As the Second Vatican Council taught, 'the liturgy is the summit toward which the activity of the Church is directed; at the same time it is the font from which all her power flows.' Catholics are obligated to attend Mass on Sundays and Holy Days of Obligation.",example:""},
+  {category:"Liturgical Prayer",name:"Liturgy of the Hours (Divine Office)",desc:"The official prayer of the Church, sanctifying each hour of the day. It consists of seven 'hours': the Office of Readings (formerly Matins), Morning Prayer (Lauds), Daytime Prayer (Terce, Sext, None), Evening Prayer (Vespers), and Night Prayer (Compline). Priests and deacons are obligated to pray the full Office daily; religious orders arrange their entire day around it; laypeople are encouraged to pray at least Morning and Evening Prayer. Vespers, including the Magnificat, is particularly rich. The Hours draw primarily from the Psalms, with Scriptural canticles, antiphons, hymns, and readings. 'Seven times a day I praise you.' (Psalm 119:164)",example:"Example — Night Prayer (Compline) always ends with a Marian antiphon appropriate to the season, such as the Salve Regina: 'Hail, Holy Queen, Mother of Mercy...'"},
+  {category:"Vocal Prayer",name:"The Rosary",desc:"The Rosary is perhaps the most beloved Catholic devotional prayer. It consists of meditating on 20 Mysteries of the Faith (5 per day) while reciting 5 decades each consisting of 1 Our Father, 10 Hail Marys, and 1 Glory Be. The prayers are said on a string of beads. Beginning with the Apostles' Creed, Our Father, 3 Hail Marys, and a Glory Be, each of the 5 decades is preceded by announcing a Mystery and an Our Father. The Rosary was given its current form through Dominican preachers in the 15th century. St. Pius V credited the Christian victory at the Battle of Lepanto (1571) to the Rosary. Our Lady of Fatima urged its daily recitation.",example:"The 20 Mysteries: JOYFUL: Annunciation, Visitation, Nativity, Presentation, Finding in the Temple. LUMINOUS (added by JPII): Baptism of Jesus, Wedding at Cana, Proclamation of the Kingdom, Transfiguration, Institution of the Eucharist. SORROWFUL: Agony in the Garden, Scourging, Crowning with Thorns, Carrying the Cross, Crucifixion. GLORIOUS: Resurrection, Ascension, Descent of the Holy Spirit, Assumption of Mary, Coronation of Mary."},
+  {category:"Vocal Prayer",name:"The Angelus",desc:"Prayed three times daily (morning, noon, and evening, traditionally at the ringing of the Angelus bell), the Angelus commemorates the Annunciation and the Incarnation. It consists of three short scriptural verses about the Incarnation, each followed by a Hail Mary, concluded by a versicle and collect. The ringing of church bells for the Angelus remains a beloved Catholic custom. During Eastertide, the Angelus is replaced by the Regina Caeli ('Queen of Heaven'), a more joyful antiphon celebrating the Resurrection.",example:"V. The Angel of the Lord declared unto Mary. R. And she conceived of the Holy Spirit. Hail Mary... V. Behold the handmaid of the Lord. R. Be it done unto me according to thy word. Hail Mary... V. And the Word was made flesh. R. And dwelt among us. Hail Mary... Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts..."},
+  {category:"Mental Prayer",name:"Lectio Divina",desc:"Lectio Divina ('Sacred Reading') is an ancient monastic practice of prayerful Scripture reading formalized by Guigo II in the 12th century. It consists of four movements: Lectio (reading the text slowly and attentively), Meditatio (meditating on a word, phrase, or image that strikes you), Oratio (responding to God in prayer based on what arose in meditation), and Contemplatio (resting silently in God's presence, allowing Him to speak). A fifth movement sometimes added is Actio — carrying a specific fruit into one's daily life. Pope Benedict XVI, in his apostolic exhortation Verbum Domini (2010), warmly recommended Lectio Divina to all the faithful as a means of deepening their relationship with God through Scripture.",example:"Example: Read Luke 24:13–35 (Road to Emmaus) slowly twice. Notice what word or phrase strikes you. Sit with it. Let it expand. Then speak to Christ: 'Lord, stay with me...' Then rest in silence, receptive to whatever He gives."},
+  {category:"Mental Prayer",name:"Mental Prayer / Meditation",desc:"Mental prayer is interior, non-vocal prayer in which the soul engages the intellect, will, and imagination in conversation with God. St. Teresa of Ávila defined it as 'nothing more than a close sharing between friends; it means taking time frequently to be alone with him who we know loves us.' St. Francis de Sales's Introduction to the Devout Life provides a systematic method: place yourself in the presence of God, ask for grace, apply the imagination to a mystery of faith, draw practical resolutions, and conclude with a spiritual bouquet — a short phrase or image to carry through the day. St. Ignatius of Loyola's Spiritual Exercises provide another highly structured form of meditation using the imagination to enter Gospel scenes.",example:"A simple method: 1) Quiet yourself; 2) Acknowledge God's presence; 3) Read a short Gospel passage and imagine yourself there; 4) Speak naturally to Jesus about what you see; 5) Listen; 6) Take one concrete resolution for the day."},
+  {category:"Contemplative Prayer",name:"Contemplative Prayer",desc:"Contemplation is a gift of God, not a technique — it is infused prayer in which God takes the initiative and the soul receives rather than does. St. John of the Cross and St. Teresa of Ávila mapped the soul's journey through various degrees of prayer leading to contemplation: recollection, prayer of quiet, prayer of union, and transforming union (spiritual marriage). Signs that one is being called to contemplation include: inability to meditate as before, desire for solitude and silence, and a general loving attention to God without distinct acts. Contemplative prayer should not be confused with Eastern meditation techniques; it is always trinitarian and Christocentric.",example:""},
+  {category:"Contemplative Prayer",name:"Eucharistic Adoration",desc:"The practice of praying before the Blessed Sacrament exposed in a monstrance or reserved in the tabernacle. Pope John Paul II strongly encouraged it: 'The Church and the world have a great need of eucharistic adoration.' Perpetual Adoration — where a parish or religious community ensures someone is always before the Blessed Sacrament — has experienced a worldwide revival since the 1990s. Eucharistic adoration is not just a preparation for Mass but a continuation of it, a prolongation of the moment of Holy Communion. Many saints, including St. Thérèse and St. John Vianney, testified that their holiness flowed from hours spent in adoration.",example:"A simple structure: Begin with an Act of Faith in the Real Presence. Then spend time in silence. You may pray the Rosary, Liturgy of the Hours, or simply remain with Him. Conclude with the Divine Praises."},
+  {category:"Devotional Prayer",name:"Chaplet of Divine Mercy",desc:"Given to St. Faustina Kowalska (d. 1938) by Jesus in the 1930s, the Chaplet of Divine Mercy is prayed on ordinary Rosary beads. It consists of an opening prayer, then on each set of beads: on the large beads 'Eternal Father, I offer you the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world,' and on the small beads 'For the sake of His sorrowful Passion, have mercy on us and on the whole world,' concluding with a closing prayer. Jesus promised to St. Faustina extraordinary graces for praying it, particularly at the 'Hour of Mercy' (3 PM). St. John Paul II established Divine Mercy Sunday on the Second Sunday of Easter.",example:"Jesus's words to St. Faustina: 'Whoever will recite it will receive great mercy at the hour of death. Priests will recommend it to sinners as their last hope of salvation.'"},
+  {category:"Devotional Prayer",name:"The Novena",desc:"A novena (from Latin novem, nine) is a form of prayer consisting of nine consecutive days of prayer for a special intention, following the model of the Apostles and Mary in the nine days between the Ascension and Pentecost (Acts 1:14). There are novenas to various saints, to the Sacred Heart, to Our Lady, to the Holy Spirit, and for specific feasts. The most popular include the Novena to St. Thérèse ('shower of roses'), the Novena to St. Jude (patron of hopeless cases), and the Christmas Novena. Novenas are distinguished by perseverance — praying through nine days regardless of whether one 'feels' the prayer is being answered, trusting in God's providence.",example:""},
+  {category:"Devotional Prayer",name:"Examination of Conscience",desc:"A nightly prayer practice of reviewing the day in God's presence, originating with the Stoics but transformed by St. Ignatius of Loyola into a distinctively Christian exercise. The Ignatian Examen consists of five steps: 1) Give thanks for the gifts of the day; 2) Ask the Holy Spirit for clarity; 3) Review the day hour by hour: when did you act in love? when did you fail?; 4) Face your failures with sorrow but without despair; 5) Look with hope to tomorrow, making one concrete resolution. This practice is the foundation of the sacrament of Reconciliation and develops what Ignatius called 'discernment of spirits' — the ability to recognize the movements of grace and temptation in one's soul.",example:""},
+];
+
+// ---- RELICS DATA ----
+const relicsData = [
+  {name:"The Shroud of Turin",relic_class:"First Class",location:"Cathedral of Saint John the Baptist, Turin, Italy",saint:"Jesus Christ",desc:"The Shroud of Turin is a linen cloth, approximately 14.3 feet by 3.7 feet, bearing the faint image of a man who appears to have suffered crucifixion trauma consistent with the Gospel accounts of Christ's Passion. It has been in Turin since 1578. The 1988 carbon dating test placed it to medieval times (1260–1390), but subsequent research has challenged those results, citing contamination by medieval repairs. The 2002 restoration confirmed that patches from medieval repairs were included in the carbon dating samples. The STURP (Shroud of Turin Research Project) team of 33 scientists found: no trace of paint, pigment, or dye; the image was formed by some kind of oxidation; the blood is genuine human blood (type AB); the wounds are consistent with Roman crucifixion. The Church has never officially declared the Shroud to be authentic, but honors it as an icon."},
+  {name:"The Tilma of Juan Diego",relic_class:"First Class",location:"Basilica of Our Lady of Guadalupe, Mexico City, Mexico",saint:"Our Lady of Guadalupe / Juan Diego",desc:"The tilma (cloak) of Juan Diego, on which the image of Our Lady of Guadalupe is miraculously imprinted, is housed in a glass case behind the main altar of the Basilica of Our Lady of Guadalupe — the most visited Catholic pilgrimage site in the world and the most visited sacred site in the Western Hemisphere. The fabric is made of ayate fiber from the cactus plant, which typically lasts no more than 30 years. The image has now persisted for nearly 500 years. Studies by NASA, ophthalmologists, and textile experts have found no natural explanation for the image's creation or preservation. Approximately 22 million pilgrims visit annually. The tilma is technically a contact relic (having been in physical contact with Juan Diego's body) as well as an extraordinary sign."},
+  {name:"The Holy Lance (Spear of Destiny)",relic_class:"First Class",location:"Imperial Treasury, Vienna, Austria (principal claim); Vatican; Krakow",saint:"Passion of Christ",desc:"The Holy Lance, or Spear of Destiny, is the lance said to have pierced the side of Christ on the Cross by the Roman soldier Longinus (Jn 19:34). Multiple relics claim to be the original or parts of it: the Vienna lance (in the Imperial Treasury of the Hofburg), a lance in the Vatican, and another in Kraków, Poland. The Vienna lance is the most historically documented, associated with the Holy Roman Emperors from at least the 10th century. Charlemagne was said to have carried it in 47 victorious battles. It is currently on display in the Imperial Treasury in Vienna. St. Longinus, the soldier who pierced Christ's side, is traditionally said to have converted at the foot of the Cross and later became a martyr."},
+  {name:"The True Cross (Fragments)",relic_class:"First Class",location:"Multiple churches worldwide; principal fragments in Rome and Jerusalem",saint:"Passion of Christ",desc:"According to tradition, St. Helena, mother of Emperor Constantine, discovered the True Cross during a pilgrimage to Jerusalem around 327 AD. The historian Eusebius of Caesarea and Egeria both mention the cross and its presence in Jerusalem. The cross was divided: a portion remained in Jerusalem (later captured and recovered multiple times), a portion was sent to Rome (where fragments are preserved in the Basilica of the Holy Cross in Jerusalem), and smaller fragments were distributed to churches worldwide. The sheer number of fragments distributed over the centuries led to the Protestant taunt that they would fill a ship — but Calvin's claim has been mathematically refuted: all authenticated fragments together total less than the volume of one human arm."},
+  {name:"Crown of Thorns",relic_class:"First Class",location:"Notre-Dame Cathedral (currently in the Trésor du Louvre during reconstruction), Paris, France",saint:"Passion of Christ",desc:"The Crown of Thorns worn by Christ during his Passion has been venerated in Paris since 1239, when King Louis IX of France acquired it from Emperor Baldwin II of Constantinople. Louis IX built the Sainte-Chapelle specifically to house it. The Crown — a circular band of woven rush and reedgrass — survived the French Revolution and the fire at Notre-Dame in 2019, when it was rescued by a firefighter-priest. It is normally displayed at Notre-Dame on the first Friday of each month and every Friday during Lent. The species of thorns are not attached to the Crown itself but are preserved separately; the circular band is the authentic Crown, confirmed by Byzantine records from the 10th century."},
+  {name:"The Incorrupt Body of St. Bernadette",relic_class:"First Class",location:"Chapel of the Convent of Saint-Gildard, Nevers, France",saint:"St. Bernadette Soubirous",desc:"St. Bernadette Soubirous, the seer of Lourdes, died on April 16, 1879. Her body has been exhumed three times — in 1909, 1919, and 1925 — as part of the Church's beatification and canonization process. Each examination found the body in an extraordinary state of preservation, despite being in a damp vault. The body lies in a crystal and gilt reliquary in the chapel of the Sisters of Notre Dame at Nevers, dressed in her Carmelite habit. A light wax mask covers her face and hands, added after the 1925 examination to protect slight surface darkening. The body is viewed by pilgrims daily. Significantly, Bernadette herself desired no special recognition: 'After my death, I will spend my heaven doing good on earth.' Her preservation is considered one of the most remarkable incorruptible cases."},
+  {name:"Gloves and Personal Effects of Padre Pio",relic_class:"Second Class",location:"San Giovanni Rotondo, Italy; multiple locations worldwide",saint:"St. Padre Pio",desc:"St. Padre Pio of Pietrelcina wore brown fingerless gloves over his stigmata wounds to protect them and prevent the blood from staining his vestments during Mass. These gloves, after his death in 1968, became among the most sought-after second-class relics in modern Church history. They bear marks of his blood. Other second-class relics associated with Padre Pio include his cincture, his breviary, and the steel wool glove he sometimes wore in penance. The sangue (blood) of Padre Pio — absorbed onto cloths from his wounds — is technically a first-class relic. These relics are at the center of intense popular devotion, with thousands of pilgrims visiting San Giovanni Rotondo daily, and hundreds of churches worldwide holding authenticated relics."},
+  {name:"Relics of St. Peter",relic_class:"First Class",location:"Under the High Altar, St. Peter's Basilica, Vatican City",saint:"St. Peter the Apostle",desc:"The tomb of St. Peter beneath the high altar of St. Peter's Basilica in Rome is one of the most venerated spots in Christendom. Excavations beneath St. Peter's Basilica, commissioned by Pope Pius XII and carried out 1939–50, revealed layers of history including a 1st-century necropolis, graffiti venerating Peter, and what are believed to be Peter's bones. A 2013 announcement by Pope Francis described a small collection of bone fragments wrapped in purple cloth, previously unexamined in a storeroom, as possibly authentic relics. The bones have been analyzed and found to belong to a robust male in his 60s–70s from the 1st century. The veneration of Peter's tomb in Rome is attested as early as 160 AD by Gaius of Rome, who wrote of the 'trophy' (monument) of Peter on the Vatican hill."},
+  {name:"Relic of the Holy Blood (Bruges)",relic_class:"First Class",location:"Basilica of the Holy Blood, Bruges, Belgium",saint:"Passion of Christ",desc:"The Basilica of the Holy Blood in Bruges contains a vial said to hold a cloth soaked in the blood of Jesus Christ, brought from the Holy Land by Thierry of Alsace, Count of Flanders, after the Second Crusade in 1150. The relic has been the centerpiece of the Procession of the Holy Blood in Bruges since 1291 — one of Belgium's oldest religious processions, now a UNESCO Intangible Cultural Heritage. Pope Clement V granted an indulgence for those venerating the relic in 1310. The authenticity is a matter of faith and tradition; Pope Clement V's recognition represents the highest level of historical Church approval. The annual procession draws tens of thousands of participants and is one of Belgium's most spectacular public events."},
+  {name:"Robe of Our Lady (Veil of the Virgin)",relic_class:"First Class",location:"Cathedral of Our Lady of Chartres (Sancta Camisia), Chartres, France",saint:"Blessed Virgin Mary",desc:"The Cathedral of Chartres is built as a reliquary for the Sancta Camisia — a garment said to have been worn by the Virgin Mary when she gave birth to Jesus. It was given to Charlemagne by the Byzantine Empress Irene in 876 and later donated to the Cathedral of Chartres. The relic survived the great fire of 1194 and is credited with inspiring the rebuilding of the present Gothic cathedral. It is kept in a silver reliquary in the cathedral's treasury. The presence of this relic made Chartres one of the most important pilgrimage centers in medieval France, drawing millions of pilgrims. Chartres Cathedral, completed around 1220, is considered one of the supreme achievements of Gothic architecture and is a UNESCO World Heritage Site."},
+  {name:"Third-Class Relic Card (Contact Relic)",relic_class:"Third Class",location:"Distributed to the faithful worldwide",saint:"Various Saints",desc:"A third-class relic is any object touched to a first- or second-class relic. The most common form is a small piece of cloth (ex brandea) pressed against a first-class relic, then mounted on a card with an image of the saint and sealed with wax and an authenticating ribbon. These are the relics most accessible to ordinary Catholics. Canon Law requires that relics — particularly first and second class — be accompanied by a document of authenticity from the appropriate Church authority. Third-class relic cards are often distributed by religious orders, shrines, or dioceses. Many Catholics keep them in their wallets, prayer books, or on small altars in their homes. The practice of honoring relics is explicitly defended by the Council of Trent against Protestant objections, and is rooted in the New Testament accounts of healing through contact with Paul's handkerchiefs (Acts 19:12)."},
+];
+
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+function getColorBadge(color){
+  const map={
+    white:"badge-white",gold:"badge-gold",red:"badge-red",
+    green:"badge-green",purple:"badge-purple",black:"badge-navy",rose:"badge-purple"
+  };
+  const labels={white:"White",gold:"Gold / White",red:"Red",green:"Green",purple:"Purple / Violet",black:"Black",rose:"Rose"};
+  const dot=`<span class="color-dot color-${color}"></span>`;
+  return `<span class="badge ${map[color]||'badge-white'}">${dot}${labels[color]||color}</span>`;
+}
+function getRankBadge(rank){
+  const map={Solemnity:"badge-gold",Feast:"badge-red",Memorial:"badge-blue","Optional Memorial":"badge-navy",Season:"badge-purple"};
+  return `<span class="badge ${map[rank]||'badge-white'}">${rank}</span>`;
+}
+function isUpcoming(dateStr){
+  const d=new Date(dateStr);
+  const now=REAL_TODAY;
+  const diff=(d-now)/(1000*60*60*24);
+  return diff>=0 && diff<=30;
+}
+
+// ============================================================
+// TAB 1: LITURGICAL CALENDAR
+// ============================================================
+function renderLiturgical(){
+  // Mark upcoming
+  liturgicalData.forEach(e=>e.upcoming=isUpcoming(e.date));
+  filterLiturgical();
+  // Season banner
+  renderSeasonBanner();
+}
+function renderSeasonBanner(){
+  const now=REAL_TODAY;
+  const month=now.getMonth()+1;
+  let season="Ordinary Time",color="#2a7a2a",desc2="The liturgical color is green, symbolizing hope and growth in faith.";
+  if((month===12&&now.getDate()>=1)||month<1){season="Advent";color="#6a2a8a";desc2="A season of joyful preparation and anticipation."}
+  else if((month===12&&now.getDate()>=25)||(month===1&&now.getDate()<=12)){season="Christmas Season";color="#c9a84c";desc2="Celebrating the Nativity of Our Lord. White and gold vestments."}
+  else if(month===3||month===4){season="Lent / Holy Week / Easter";color="#b52222";desc2="A season of penance, prayer, and almsgiving culminating in the Paschal Triduum."}
+  const el=document.getElementById('season-banner-container');
+  el.innerHTML=`<div class="season-banner"><div><h3>Current Season: ${season}</h3><p>${desc2}</p></div></div>`;
+}
+function filterLiturgical(){
+  const month=document.getElementById('lit-month-filter').value;
+  const type=document.getElementById('lit-type-filter').value;
+  const upcomingOnly=document.getElementById('upcoming-only').checked;
+  let items=liturgicalData;
+  if(month) items=items.filter(i=>i.month==month);
+  if(type) items=items.filter(i=>i.rank===type);
+  if(upcomingOnly) items=items.filter(i=>i.upcoming);
+  items.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const container=document.getElementById('liturgical-list');
+  document.getElementById('lit-count').textContent=`Showing ${items.length} entries`;
+  if(!items.length){container.innerHTML='<div class="empty-state">No entries found for the selected filters.</div>';return;}
+  container.innerHTML=items.map(i=>{
+    const d=new Date(i.date);
+    const dateStr=d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+    const upBadge=i.upcoming?`<span class="upcoming-badge">Upcoming</span>`:'';
+    return `<div class="card ${i.upcoming?'upcoming-card':''}">
+      <div class="card-header">
+        <div>
+          <div class="card-title">${i.name}</div>
+          <div class="card-subtitle">${dateStr}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem">
+          ${upBadge}
+          ${getRankBadge(i.rank)}
+          ${getColorBadge(i.color)}
+        </div>
+      </div>
+      <div class="card-body" style="display:block">${i.desc}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// TAB 2: SAINTS
+// ============================================================
+function renderSaints(){filterSaints();}
+function filterSaints(){
+  const q=document.getElementById('saint-search').value.toLowerCase();
+  const month=document.getElementById('saint-month-filter').value;
+  let items=saintsData;
+  if(q) items=items.filter(s=>`${s.name} ${s.patron} ${s.bio}`.toLowerCase().includes(q));
+  if(month) items=items.filter(s=>s.feastMonth==month);
+  const container=document.getElementById('saints-list');
+  document.getElementById('saint-count').textContent=`Showing ${items.length} saints`;
+  if(!items.length){container.innerHTML='<div class="empty-state">No saints found.</div>';return;}
+  container.innerHTML=items.map((s,i)=>`
+    <div class="card expandable" id="saint-${i}" onclick="toggleCard('saint-${i}')">
+      <div class="card-header">
+        <div>
+          <div class="card-title">${s.name}</div>
+          <div class="card-subtitle">Feast: ${s.feastDay}</div>
+        </div>
+        <span class="expand-icon" style="font-style:normal">▾</span>
+      </div>
+      <div class="card-meta">
+        ${s.patron?`<span class="badge badge-gold">Patron of: ${s.patron}</span>`:''}
+        <span class="badge badge-blue">Canon: ${s.canon}</span>
+      </div>
+      <div class="card-body">${s.bio}</div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// TAB 3: POPES
+// ============================================================
+function renderPopes(){filterPopes();}
+function filterPopes(){
+  const q=document.getElementById('pope-search').value.toLowerCase();
+  const era=document.getElementById('pope-era-filter').value;
+  let items=popesData;
+  if(q) items=items.filter(p=>`${p.name} ${p.birth} ${p.nat} ${p.legacy}`.toLowerCase().includes(q));
+  if(era) items=items.filter(p=>p.era===era);
+  const container=document.getElementById('popes-list');
+  document.getElementById('pope-count').textContent=`Showing ${items.length} popes`;
+  if(!items.length){container.innerHTML='<div class="empty-state">No popes found.</div>';return;}
+  container.innerHTML=items.map(p=>`
+    <div class="card pope-card ${p.era==='modern'?'pope-modern':''}">
+      <div class="pope-header">
+        <div class="pope-number">${p.num}.</div>
+        <div class="pope-info">
+          <div class="card-title">${p.name} ${p.era==='modern'?'<span class="badge badge-gold" style="font-size:0.65rem;vertical-align:middle">Modern</span>':''}</div>
+          <div class="card-subtitle">Born: ${p.birth} &bull; ${p.nat}</div>
+          <div class="pope-dates">Pontificate: ${p.start} – ${p.end}</div>
+        </div>
+      </div>
+      <div class="card-body" style="display:block;margin-top:0.75rem">${p.legacy}</div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// TAB 4: MIRACLES
+// ============================================================
+let currentMiracleFilter='all';
+function renderMiracles(){filterMiracles(document.querySelector('#miracle-filters .filter-btn.active'),'all');}
+function filterMiracles(btn,type){
+  document.querySelectorAll('#miracle-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  currentMiracleFilter=type;
+  let items=type==='all'?miraclesData:miraclesData.filter(m=>m.tags.includes(type));
+  const container=document.getElementById('miracles-list');
+  container.innerHTML=items.map((m,i)=>{
+    const tagBadges=m.tags.map(t=>{
+      if(t==='Eucharistic Miracle') return '<span class="badge badge-gold">Eucharistic Miracle</span>';
+      if(t==='Apparition') return '<span class="badge badge-blue">Apparition</span>';
+      if(t==='Healing') return '<span class="badge badge-green">Healing</span>';
+      if(t==='Sign') return '<span class="badge badge-purple">Sign</span>';
+      return '<span class="badge badge-white">Other</span>';
+    }).join('');
+    return `<div class="card expandable" id="miracle-${i}" onclick="toggleCard('miracle-${i}')">
+      <div class="card-header">
+        <div>
+          <div class="card-title">${m.name}</div>
+          <div class="card-subtitle">${m.location} &bull; ${m.year}</div>
+        </div>
+        <span class="expand-icon" style="font-style:normal">▾</span>
+      </div>
+      <div class="card-meta">
+        ${tagBadges}
+        <span class="badge badge-green" style="font-size:0.68rem">${m.approval}</span>
+      </div>
+      <div class="card-body">${m.desc}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// TAB 5: PRAYER
+// ============================================================
+function renderPrayer(){
+  const categories=[...new Set(prayerData.map(p=>p.category))];
+  const container=document.getElementById('prayer-content');
+  container.innerHTML=categories.map(cat=>{
+    const entries=prayerData.filter(p=>p.category===cat);
+    return `<div class="prayer-section">
+      <h3>${cat}</h3>
+      <div class="cards-list">
+        ${entries.map((p,i)=>`
+          <div class="card expandable" id="prayer-${cat.replace(/\s/g,'')}-${i}" onclick="toggleCard('prayer-${cat.replace(/\s/g,'')}-${i}')">
+            <div class="card-header">
+              <div class="card-title">${p.name}</div>
+              <span class="expand-icon" style="font-style:normal">▾</span>
+            </div>
+            <div class="card-body">
+              ${p.desc}
+              ${p.example?`<div class="prayer-example">${p.example}</div>`:''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// TAB 6: RELICS
+// ============================================================
+let currentRelicFilter='all';
+function renderRelics(){filterRelics(document.querySelector('#relics-list'),  'all');}
+function filterRelics(btn,type){
+  document.querySelectorAll('[onclick*="filterRelics"]').forEach(b=>b.classList.remove('active'));
+  if(btn&&btn.classList) btn.classList.add('active');
+  currentRelicFilter=type;
+  let items=type==='all'?relicsData:relicsData.filter(r=>r.relic_class===type);
+  const container=document.getElementById('relics-list');
+  container.innerHTML=items.map((r,i)=>{
+    const cls=r.relic_class==='First Class'?'relic-first':r.relic_class==='Second Class'?'relic-second':'relic-third';
+    const badgeCls=r.relic_class==='First Class'?'badge-red':r.relic_class==='Second Class'?'badge-gold':'badge-navy';
+    return `<div class="card expandable ${cls}" id="relic-${i}" onclick="toggleCard('relic-${i}')">
+      <div class="card-header">
+        <div>
+          <div class="card-title">${r.name}</div>
+          <div class="card-subtitle">${r.saint}</div>
+        </div>
+        <span class="expand-icon" style="font-style:normal">▾</span>
+      </div>
+      <div class="card-meta">
+        <span class="badge ${badgeCls}">${r.relic_class}</span>
+        <span class="badge badge-blue">${r.location.split(',')[0]}</span>
+      </div>
+      <div class="card-body">${r.desc}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// SHARED UTILITIES
+// ============================================================
+function toggleCard(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.toggle('open');
+}
+function showTab(tab){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`tab-${tab}`).classList.add('active');
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  // Lazy render
+  if(tab==='liturgical') renderLiturgical();
+  if(tab==='saints') renderSaints();
+  if(tab==='popes') renderPopes();
+  if(tab==='miracles') renderMiracles();
+  if(tab==='prayer') renderPrayer();
+  if(tab==='relics'){
+    renderRelics();
+    // Re-attach active state to first button
+    const btns=document.querySelectorAll('[onclick*="filterRelics"]');
+    if(btns.length) btns[0].classList.add('active');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Back to top button
+window.addEventListener('scroll',()=>{
+  const btn=document.getElementById('back-to-top');
+  if(window.scrollY>400) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+// Initialize
+renderLiturgical();
+</script>
+</body>
+</html>
